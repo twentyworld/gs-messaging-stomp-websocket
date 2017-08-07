@@ -4,50 +4,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Timestamp;
 
 /**
- * Created by temper on 2017/8/6,下午4:27.
+ * Created by temper on 2017/8/7,上午10:47.
  * copy as you like, but with these word.
  * at last, The forza horizon is really fun, buy is made, looking forward to driving together in the hurricane.
  */
 @Entity
-public class Trades {
+public class RawOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id ;
-    private Timestamp when ;
+    private  long trader_id;
+    private int isBuy;
     private String Symbol;
-    private boolean isBuy;
     private double price;
     private int quantity;
 
-    public Trades() {
+    public RawOrder() {
     }
 
-    public Trades(long id, Timestamp when, String symbol, boolean isBuy, double price, int quantity) {
-        this.id = id;
-        this.when = when;
-        Symbol = symbol;
+    public RawOrder(int isBuy, String symbol, double price, int quantity) {
         this.isBuy = isBuy;
+        Symbol = symbol;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public long getId() {
-        return id;
+    public int getIsBuy() {
+        return isBuy;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Timestamp getWhen() {
-        return when;
-    }
-
-    public void setWhen(Timestamp when) {
-        this.when = when;
+    public void setIsBuy(int isBuy) {
+        this.isBuy = isBuy;
     }
 
     public String getSymbol() {
@@ -56,14 +44,6 @@ public class Trades {
 
     public void setSymbol(String symbol) {
         Symbol = symbol;
-    }
-
-    public boolean isBuy() {
-        return isBuy;
-    }
-
-    public void setBuy(boolean buy) {
-        isBuy = buy;
     }
 
     public double getPrice() {
@@ -80,5 +60,13 @@ public class Trades {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public long getTrader_id() {
+        return trader_id;
+    }
+
+    public void setTrader_id(long trader_id) {
+        this.trader_id = trader_id;
     }
 }

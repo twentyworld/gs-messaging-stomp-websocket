@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gs-messaging-stomp-websocket.iml" filepath="$PROJECT_DIR$/gs-messaging-stomp-websocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trading.iml" filepath="$PROJECT_DIR$/trading.iml" />
     </modules>
   </component>
 </project>
