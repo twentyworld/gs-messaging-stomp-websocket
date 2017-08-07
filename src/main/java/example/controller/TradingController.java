@@ -43,15 +43,18 @@ public class TradingController {
 
 
     @RequestMapping("/addOrder")
-    public @ResponseBody Map<String, Object> addOrder(HttpServletRequest request){
+    public @ResponseBody Map<String, Object> addOrder(){
         Map<String,Object> map = new HashMap<>();
-        int isBuy = Boolean.parseBoolean(request.getParameter(""))==true?1:0;
-        String Symbol = request.getParameter("");
-        double price = Double.parseDouble(request.getParameter(""));
-        int quantity = Integer.parseInt(request.getParameter(""));
-        String strategy = request.getParameter("");
-        RawOrder order = new RawOrder(isBuy,Symbol,price,quantity);
+//
+//        HttpServletRequest request
+//        int isBuy = Boolean.parseBoolean(request.getParameter(""))==true?1:0;
+//        String Symbol = request.getParameter("");
+//        double price = Double.parseDouble(request.getParameter(""));
+//        int quantity = Integer.parseInt(request.getParameter(""));
+//        String strategy = request.getParameter("");
+        RawOrder order = new RawOrder(1,"ABT",48.5,19);
 
+        String strategy = "FOK";
         orderService = IOrderServiceFactory.getOrderService(strategy);
         map = orderService.addOrder(order);
         return map;

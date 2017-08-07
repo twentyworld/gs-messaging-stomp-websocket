@@ -18,8 +18,7 @@ public interface OrderRepository extends Repository<RawOrder,Long>{
     List<RawOrder> findAll();
     RawOrder deleteByTrader_id(long id);
 
-
-    @Query(value = "SELECT * FROM Raw_Order WHERE Symbol = ?1 AND isBuy = ?2",nativeQuery = true)
+    @Query(value = "SELECT * FROM Raw_Order WHERE Symbol = ?1 AND isBuy ！= ?2",nativeQuery = true)
     List<RawOrder> getOrdersBySymbol(String Symbol, int isBuy);
 
 

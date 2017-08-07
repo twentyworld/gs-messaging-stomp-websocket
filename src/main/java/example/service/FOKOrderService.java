@@ -16,14 +16,13 @@ import java.util.Map;
  */
 @Component
 public class FOKOrderService implements IOrderService{
-
-
     @Autowired
     OrderRepository orderRepository;
 
-
+    //当我们增加一个order时，调用此方法。
     public Map<String,Object> addOrder(RawOrder order){
         Map<String,Object> map = new HashMap<>();
+        //取出所有同一symbol下的所有的order book，而且是同一买卖的
         List<RawOrder> orders = orderRepository.getOrdersBySymbol(order.getSymbol(),order.getIsBuy());
         for(RawOrder temp : orders){
             if(temp.getIsBuy()==order.getIsBuy()&& temp.getPrice()==order.getPrice()) {
@@ -35,13 +34,14 @@ public class FOKOrderService implements IOrderService{
                     orderRepository.save(temp);
                     map.put("update", temp);
                 } else if (temp.getQuantity() < order.getQuantity()) map.put("reject", true);
+                else
+                    map.put("reject", true);
 
                 break;
             }
         }
         return map;
     }
-
 
     public static String printSelf() {
         return "FOK";

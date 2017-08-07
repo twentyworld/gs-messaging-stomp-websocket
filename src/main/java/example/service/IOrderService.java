@@ -11,5 +11,4 @@ import java.util.Map;
  */
 public interface IOrderService {
      Map<String,Object> addOrder(RawOrder order);
-
 }

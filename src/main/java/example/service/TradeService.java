@@ -26,7 +26,6 @@ public class TradeService {
     }
 
     public List<RawOrder> init(){
-
         //BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("/Users/temperlee/Desktop")));
         File file = new File("/Users/temperlee/Desktop/tradedata.csv");
         try {
