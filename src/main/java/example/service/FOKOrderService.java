@@ -17,17 +17,24 @@ import java.util.Map;
 @Component
 public class FOKOrderService implements IOrderService{
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     //当我们增加一个order时，调用此方法。
     public Map<String,Object> addOrder(RawOrder order){
+        System.out.println("zheli ");
         Map<String,Object> map = new HashMap<>();
-        //取出所有同一symbol下的所有的order book，而且是同一买卖的
-        List<RawOrder> orders = orderRepository.getOrdersBySymbol(order.getSymbol(),order.getIsBuy());
+        //取出所有同一symbol下的所有的order book
+        System.out.println(order.getSymbol());
+        System.out.println(orderRepository.findByTraderId(1).getPrice());
+        List<RawOrder> orders = orderRepository.findBySymbol(order.getSymbol());
+        if(orders==null) {
+            map.put("reject", true);
+            return map;
+        }
         for(RawOrder temp : orders){
-            if(temp.getIsBuy()==order.getIsBuy()&& temp.getPrice()==order.getPrice()) {
+            if(temp.getIsBuy()!=order.getIsBuy()&& temp.getPrice()==order.getPrice()) {
                 if (temp.getQuantity()==order.getQuantity()) {
-                    orderRepository.deleteByTrader_id(temp.getTrader_id());
+                    orderRepository.deleteByTraderId(temp.getTraderId());
                     map.put("delete", temp);
                 } else if (temp.getQuantity() > order.getQuantity()) {
                     temp.setQuantity(temp.getQuantity() - order.getQuantity());

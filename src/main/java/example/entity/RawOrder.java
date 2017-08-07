@@ -14,20 +14,35 @@ import javax.persistence.Id;
 public class RawOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  long trader_id;
+    private  long traderId;
     private int isBuy;
-    private String Symbol;
+    private String symbol;
     private double price;
     private int quantity;
 
     public RawOrder() {
     }
 
-    public RawOrder(int isBuy, String symbol, double price, int quantity) {
+    public RawOrder(long traderId, int isBuy, String symbol, double price, int quantity) {
+        this.traderId = traderId;
         this.isBuy = isBuy;
-        Symbol = symbol;
+        this.symbol = symbol;
         this.price = price;
         this.quantity = quantity;
+    }
+    public RawOrder(int isBuy, String symbol, double price, int quantity) {
+        this.isBuy = isBuy;
+        this.symbol = symbol;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public int getIsBuy() {
@@ -36,14 +51,6 @@ public class RawOrder {
 
     public void setIsBuy(int isBuy) {
         this.isBuy = isBuy;
-    }
-
-    public String getSymbol() {
-        return Symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        Symbol = symbol;
     }
 
     public double getPrice() {
@@ -62,11 +69,11 @@ public class RawOrder {
         this.quantity = quantity;
     }
 
-    public long getTrader_id() {
-        return trader_id;
+    public long getTraderId() {
+        return traderId;
     }
 
-    public void setTrader_id(long trader_id) {
-        this.trader_id = trader_id;
+    public void setTraderId(long traderId) {
+        this.traderId = traderId;
     }
 }

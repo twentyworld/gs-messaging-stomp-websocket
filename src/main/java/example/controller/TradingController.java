@@ -25,7 +25,7 @@ public class TradingController {
     @Autowired
     TradeService tradeService;
 
-    private IOrderService orderService;
+
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
@@ -35,16 +35,17 @@ public class TradingController {
     }
 
     //here in the place to initial the database.
-    @RequestMapping("/initialization")
-    public List<RawOrder> initialization(){
-        return tradeService.init();
-        //return orderBookRepository.findAll();
-    }
+//    @RequestMapping("/initialization")
+//    public List<RawOrder> initialization(){
+//        return tradeService.init();
+//        //return orderBookRepository.findAll();
+//    }
 
 
     @RequestMapping("/addOrder")
     public @ResponseBody Map<String, Object> addOrder(){
         Map<String,Object> map = new HashMap<>();
+        IOrderService orderService;
 //
 //        HttpServletRequest request
 //        int isBuy = Boolean.parseBoolean(request.getParameter(""))==true?1:0;
@@ -52,10 +53,11 @@ public class TradingController {
 //        double price = Double.parseDouble(request.getParameter(""));
 //        int quantity = Integer.parseInt(request.getParameter(""));
 //        String strategy = request.getParameter("");
-        RawOrder order = new RawOrder(1,"ABT",48.5,19);
+        RawOrder order = new RawOrder(1234566778,1,"ABT",48.5,19);
 
         String strategy = "FOK";
         orderService = IOrderServiceFactory.getOrderService(strategy);
+        System.out.println("zheli1 ");
         map = orderService.addOrder(order);
         return map;
     }
