@@ -17,13 +17,11 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     //全部record
     public List<Record> findAll();
     //通过symbol查询。
-    List<Record> findBySymbol();
+    List<Record> findBySymbol(String symbol);
     //通过指定的时间来查询。
-
-    List<Record> findByTime(Timestamp time1,Timestamp time2);
-
+    //List<Record> findByTime(Timestamp time1,Timestamp time2);
     //add
-    List<Record> save(Record record);
+    Record save(Record record);
 
 
 }
