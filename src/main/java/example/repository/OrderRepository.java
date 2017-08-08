@@ -17,14 +17,9 @@ public interface OrderRepository extends JpaRepository<RawOrder,Long> {
 
     RawOrder save(RawOrder bidOrder);
     List<RawOrder> findAll();
-    RawOrder deleteByTraderId(long id);
+    void delete(RawOrder order);
 
     List<RawOrder> findBySymbol(String symbol);
     RawOrder findByTraderId(long id);
-
-
-
-
-
 
 }
