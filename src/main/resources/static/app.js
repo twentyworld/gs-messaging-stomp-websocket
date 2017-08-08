@@ -19,8 +19,10 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/greetings', function (greeting) {
-            showGreeting(JSON.parse(greeting).content);
-            console.log(JSON.parse(greeting).content);
+            //showGreeting(JSON.parse(greeting).content);
+            greeting = JSON.parse(greeting.body)
+            showGreeting(greeting.content);
+
         });
     });
 }
