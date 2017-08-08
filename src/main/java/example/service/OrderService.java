@@ -5,6 +5,7 @@ import example.repository.OrderBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,8 +55,10 @@ public class OrderService {
         for(RawOrder temp : orders){
             if(temp.getIsBuy()!=order.getIsBuy() && temp.getPrice()==order.getPrice()) {
                 if (temp.getQuantity()==order.getQuantity()) {
+                    List<RawOrder> add = new ArrayList<>();
+                    add.add(temp);
                     orderBookRepository.delete(temp);
-                    map.put("delete", temp);
+                    map.put("delete", add);
                 } else if (temp.getQuantity()> order.getQuantity()) {
                     temp.setQuantity(temp.getQuantity() - order.getQuantity());
                     orderBookRepository.save(temp);
