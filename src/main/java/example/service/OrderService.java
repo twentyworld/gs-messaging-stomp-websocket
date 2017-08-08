@@ -32,7 +32,7 @@ public class OrderService {
     }
 
     //当我们增加一个order时，调用此方法。
-    public Map<String,Object> addOrder(RawOrder order,String Symbol){
+    public Map<String,Object> addOrder(RawOrder order,String type){
         System.out.println("zheli");
         Map<String,Object> map = new HashMap<>();
 
