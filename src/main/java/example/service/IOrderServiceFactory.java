@@ -8,9 +8,4 @@ package example.service;
 public class IOrderServiceFactory {
     private IOrderService orderService;
 
-    public static IOrderService getOrderService(String self){
-        if(self.equals(FOKOrderService.printSelf()))
-            return new FOKOrderService();
-        else return null;
-    }
 }

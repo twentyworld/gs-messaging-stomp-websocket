@@ -32,17 +32,14 @@ public class OrderService {
     }
 
     //当我们增加一个order时，调用此方法。
-    public Map<String,Object> addOrder(RawOrder order){
+    public Map<String,Object> addOrder(RawOrder order,String Symbol){
         System.out.println("zheli");
         Map<String,Object> map = new HashMap<>();
 
-
         //如果有需要add的Order Book，put通过“add”,覆盖掉null.同样适用于delete,update,reject
-
         map.put("add",null);
         map.put("delete",null);
         map.put("update",null);
-
         map.put("reject",-1);
         //取出所有同一symbol下的所有的order book
         //取出所有同一symbol下的所有的order book
@@ -53,6 +50,7 @@ public class OrderService {
             map.put("reject", true);
             return map;
         }
+
         for(RawOrder temp : orders){
             if(temp.getIsBuy()!=order.getIsBuy() && temp.getPrice()==order.getPrice()) {
                 if (temp.getQuantity()==order.getQuantity()) {
@@ -70,10 +68,5 @@ public class OrderService {
         }
         return map;
     }
-
-    public static String printSelf() {
-        return "FOK";
-    }
-
 
 }
