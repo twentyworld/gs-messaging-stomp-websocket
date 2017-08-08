@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 public class TradingController {
     @Autowired
     TradeService tradeService;
@@ -32,19 +33,26 @@ public class TradingController {
     SimpMessageSendingOperations simpMessageSendingOperations;
 
     @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
+    @SendTo(value = "/topic/greetings")
     public @ResponseBody Content greeting(Message message) throws Exception {
-        Thread.sleep(1000); // simulated delay
+        //Thread.sleep(1000); // simulated delay
         System.out.println(message.getName());
         return new Content(message.getName()+"this");
     }
 
-    @MessageMapping("/addOrders")
-    @SendTo("/topic/greetings")
+    @RequestMapping("/hello")
+    public @ResponseBody Content greetings() throws Exception {
+        //Thread.sleep(1000); // simulated delay
+        System.out.println();
+        return new Content("this");
+    }
+
+    @MessageMapping("/addOrder")
+    @SendTo("/topic/addOrder")
     public @ResponseBody Map<String, Object> addOrderMessage(HttpServletRequest request){
 
         Map<String,Object> map = new HashMap<>();
-        int isBuy = Boolean.parseBoolean(request.getParameter("isBuy"))==true?1:0;
+        int isBuy = request.getParameter("isBuy").equals("1")?1:0;
         String symbol = request.getParameter("symbol");
         double price = Double.parseDouble(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -56,7 +64,7 @@ public class TradingController {
         //String strategy = "FOK";
         //orderService = IOrderServiceFactory.getOrderService(strategy);
         System.out.println("zheli1 ");
-        map = orderService.addOrder(order);
+        map = orderService.addOrder(order,strategy);
         return map;
     }
 
@@ -96,7 +104,7 @@ public class TradingController {
         //String strategy = "FOK";
         //orderService = IOrderServiceFactory.getOrderService(strategy);
         System.out.println("zheli1");
-        map = orderService.addOrder(order);
+        map = orderService.addOrder(order,strategy);
         return map;
     }
 
