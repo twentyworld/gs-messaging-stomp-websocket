@@ -24,4 +24,5 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     Record save(Record record);
 
 
+
 }

@@ -5,6 +5,7 @@ import example.entity.Content;
 import example.entity.Message;
 import example.entity.RawOrder;
 import example.service.FOKOrderService;
+import example.service.OrderService;
 import example.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,16 +24,12 @@ import java.util.Map;
 
 @Controller
 public class TradingController {
-
-
-
     @Autowired
     TradeService tradeService;
     @Autowired
-    FOKOrderService fokOrderService;
+    OrderService orderService;
     @Autowired
     SimpMessageSendingOperations simpMessageSendingOperations;
-
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
@@ -41,7 +38,6 @@ public class TradingController {
         System.out.println(message.getName());
         return new Content(message.getName()+"this");
     }
-
 
     @MessageMapping("/addOrders")
     @SendTo("/topic/greetings")
@@ -60,9 +56,10 @@ public class TradingController {
         //String strategy = "FOK";
         //orderService = IOrderServiceFactory.getOrderService(strategy);
         System.out.println("zheli1 ");
-        map = fokOrderService.addOrder(order);
+        map = orderService.addOrder(order);
         return map;
     }
+
 
     //here in the place to initial the database.
     @RequestMapping("/initialization")
@@ -71,18 +68,23 @@ public class TradingController {
         //return orderBookRepository.findAll();
     }
 
-    @RequestMapping(value ="/getAllOrders")
+
+    @RequestMapping(value ="/getAllOrderBook")
     public @ResponseBody List<RawOrder> getAllOrders(){
-        return fokOrderService.getAll();
+        return orderService.getAll();
+    }
+
+    @RequestMapping(value = "/getOrderBookBySymbol")
+    public @ResponseBody List<RawOrder> getOrderBookBySymbol(HttpServletRequest request){
+        String symbol = request.getParameter("symbol");
+        return orderService.getOrderBookBySymbol(symbol);
     }
 
 
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> addOrder(HttpServletRequest request){
-        Map<String,Object> map = new HashMap<>();
-
-
-        int isBuy = Boolean.parseBoolean(request.getParameter("isBuy"))==true?1:0;
+        Map<String,Object> map;
+        int isBuy = request.getParameter("isBuy").equals("1")?1:0;
         String symbol = request.getParameter("symbol");
         double price = Double.parseDouble(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -93,8 +95,8 @@ public class TradingController {
         RawOrder order = new RawOrder(1234567,isBuy,symbol,price,quantity);
         //String strategy = "FOK";
         //orderService = IOrderServiceFactory.getOrderService(strategy);
-        System.out.println("zheli1 ");
-        map = fokOrderService.addOrder(order);
+        System.out.println("zheli1");
+        map = orderService.addOrder(order);
         return map;
     }
 

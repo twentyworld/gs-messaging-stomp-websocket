@@ -1,9 +1,10 @@
 package example.service;
 
 import example.entity.RawOrder;
-import example.repository.OrderRepository;
+import example.repository.OrderBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.List;
@@ -13,15 +14,15 @@ import java.util.List;
  * copy as you like, but with these word.
  * at last, The forza horizon is really fun, buy is made, looking forward to driving together in the hurricane.
  */
-@Component
+
+@Service
 public class TradeService {
 
     @Autowired
-    private OrderRepository orderRepository;
-
+    private OrderBookRepository orderBookRepository;
 
     public List<RawOrder> BidSort(RawOrder order){
-        List<RawOrder> bids = orderRepository.findBySymbol("order");
+        List<RawOrder> bids = orderBookRepository.findBySymbol("order");
         return bids;
     }
 
@@ -39,8 +40,7 @@ public class TradeService {
                 float price = Float.parseFloat(lines[2].trim());
                 int quantity = Integer.parseInt(lines[3].trim());
                 RawOrder order = new RawOrder(isBuy,lines[0],price,quantity);
-
-                orderRepository.save(order);
+                orderBookRepository.save(order);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -48,7 +48,7 @@ public class TradeService {
             e.printStackTrace();
         }
 
-       return orderRepository.findAll();
+       return orderBookRepository.findAll();
     }
 
 

@@ -1,6 +1,7 @@
 package example.service;
 
 import example.entity.RawOrder;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import java.util.Map;
  * copy as you like, but with these word.
  * at last, The forza horizon is really fun, buy is made, looking forward to driving together in the hurricane.
  */
+@Service
 public interface IOrderService {
      Map<String,Object> addOrder(RawOrder order);
 }
