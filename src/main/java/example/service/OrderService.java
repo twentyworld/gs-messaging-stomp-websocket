@@ -35,6 +35,16 @@ public class OrderService {
     public Map<String,Object> addOrder(RawOrder order){
         System.out.println("zheli");
         Map<String,Object> map = new HashMap<>();
+
+
+        //如果有需要add的Order Book，put通过“add”,覆盖掉null.同样适用于delete,update,reject
+
+        map.put("add",null);
+        map.put("delete",null);
+        map.put("update",null);
+
+        map.put("reject",-1);
+        //取出所有同一symbol下的所有的order book
         //取出所有同一symbol下的所有的order book
         System.out.println(order.getSymbol());
         // System.out.println(orderRepository.findByTraderId(1).getPrice());
