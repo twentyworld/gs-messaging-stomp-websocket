@@ -29,6 +29,7 @@ public class RecordController {
     public @ResponseBody List<Record> getAllRecord(){
         return recordService.getAllRecord();
     }
+
     @RequestMapping("/getRecordBySymbol")
     public @ResponseBody List<Record> getRecordBySymbol(HttpServletRequest request){
         String symbol = request.getParameter("symbol");

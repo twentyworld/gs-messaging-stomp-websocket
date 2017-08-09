@@ -2,8 +2,10 @@ package example.service;
 
 import example.entity.RawOrder;
 import example.entity.Record;
+import example.entity.StockDailyRecord;
 import example.repository.OrderBookRepository;
 import example.repository.RecordRepository;
+import example.repository.StockDailyRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class TradeService {
     private RecordRepository recordRepository;
     @Autowired
     private OrderBookRepository orderBookRepository;
+    @Autowired
+    private StockDailyRecordRepository stockDailyRecordRepository;
 
     public List<RawOrder> BidSort(RawOrder order){
         List<RawOrder> bids = orderBookRepository.findBySymbol("order");
@@ -96,9 +100,12 @@ public class TradeService {
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,51,39,0),123.5,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,53,40,0),124.7,40,"ABT","FOK"));
 
-        recordRepository.save(new Record(234567,345678,new Timestamp(System.currentTimeMillis()),125.3,40,"ABT","FOK"));
+        //recordRepository.save(new Record(234567,345678,new Timestamp(System.currentTimeMillis()),125.3,40,"ABT","FOK"));
 
 
+
+        stockDailyRecordRepository.save(new StockDailyRecord("ABT",new Timestamp(117,8,10,15,0,0,0),123.5,124.7));
+        stockDailyRecordRepository.save(new StockDailyRecord("ABT",new Timestamp(117,8,10,15,0,0,0),123.5,124.7));
 
 
 

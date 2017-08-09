@@ -21,8 +21,7 @@ function connect() {
         stompClient.subscribe('/topic/greetings', function (greeting) {
             //showGreeting(JSON.parse(greeting).content);
             greeting = JSON.parse(greeting.body)
-            showGreeting(greeting.content);
-
+            showGreeting(greeting.record[0].time);
         });
     });
 }

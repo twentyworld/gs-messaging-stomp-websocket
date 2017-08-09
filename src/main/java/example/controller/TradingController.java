@@ -4,6 +4,7 @@ package example.controller;
 import example.entity.Content;
 import example.entity.Message;
 import example.entity.RawOrder;
+import example.entity.StocksFluctuationRange;
 import example.service.OrderService;
 import example.service.RecordService;
 import example.service.TradeService;
@@ -37,10 +38,6 @@ public class TradingController {
     @MessageMapping("/hello")
     @SendTo(value = "/topic/greetings")
     public @ResponseBody Map<String,Object> greeting(Message message) throws Exception {
-//        //Thread.sleep(1000); // simulated delay
-//        System.out.println(message.getName());
-//        return new Content(message.getName()+"this");
-
 
         System.out.println(message.getName());
         Map<String,Object> map = new HashMap<>();
@@ -48,6 +45,7 @@ public class TradingController {
 
         return map;
     }
+
 
     @MessageMapping("/addOrder")
     @SendTo("/topic/addOrder")
@@ -90,6 +88,16 @@ public class TradingController {
         return orderService.getOrderBookBySymbol(symbol);
     }
 
+    @RequestMapping("/getStockUpsAndDowns")
+    public @ResponseBody List<StocksFluctuationRange> getStockUpsAndDowns(){
+        List<StocksFluctuationRange> lists = new ArrayList<>();
+        lists.add(new StocksFluctuationRange("ABT",1.2));
+        lists.add(new StocksFluctuationRange("ABBV",-0.2));
+        lists.add(new StocksFluctuationRange("ACN",3.4));
+        lists.add(new StocksFluctuationRange("ADBE",-2.3));
+
+        return lists;
+    }
 
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> addOrder(HttpServletRequest request){
