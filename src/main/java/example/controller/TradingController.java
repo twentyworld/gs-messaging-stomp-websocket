@@ -6,6 +6,7 @@ import example.entity.Message;
 import example.entity.RawOrder;
 import example.service.FOKOrderService;
 import example.service.OrderService;
+import example.service.RecordService;
 import example.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -30,14 +31,23 @@ public class TradingController {
     @Autowired
     OrderService orderService;
     @Autowired
+    RecordService recordService;
+    @Autowired
     SimpMessageSendingOperations simpMessageSendingOperations;
 
     @MessageMapping("/hello")
     @SendTo(value = "/topic/greetings")
-    public @ResponseBody Content greeting(Message message) throws Exception {
-        //Thread.sleep(1000); // simulated delay
+    public @ResponseBody Map<String,Object> greeting(Message message) throws Exception {
+//        //Thread.sleep(1000); // simulated delay
+//        System.out.println(message.getName());
+//        return new Content(message.getName()+"this");
+
+
         System.out.println(message.getName());
-        return new Content(message.getName()+"this");
+        Map<String,Object> map = new HashMap<>();
+        map.put("record",recordService.getAllRecord());
+
+        return map;
     }
 
     @RequestMapping("/hello")

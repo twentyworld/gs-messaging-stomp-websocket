@@ -21,4 +21,5 @@ public interface OrderBookRepository extends JpaRepository<RawOrder,Long> {
     List<RawOrder> findBySymbol(String symbol);
     RawOrder findByTraderId(long id);
 
+
 }

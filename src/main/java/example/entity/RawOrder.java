@@ -14,6 +14,7 @@ import javax.persistence.Id;
 public class RawOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private long tradeId;
     private  long traderId;
     private int isBuy;
     private String symbol;
@@ -30,11 +31,13 @@ public class RawOrder {
         this.price = price;
         this.quantity = quantity;
     }
-    public RawOrder(int isBuy, String symbol, double price, int quantity) {
-        this.isBuy = isBuy;
-        this.symbol = symbol;
-        this.price = price;
-        this.quantity = quantity;
+
+    public long getTradeId() {
+        return tradeId;
+    }
+
+    public void setTradeId(long tradeId) {
+        this.tradeId = tradeId;
     }
 
     public String getSymbol() {
