@@ -4,7 +4,6 @@ package example.controller;
 import example.entity.Content;
 import example.entity.Message;
 import example.entity.RawOrder;
-import example.service.FOKOrderService;
 import example.service.OrderService;
 import example.service.RecordService;
 import example.service.TradeService;
@@ -48,13 +47,6 @@ public class TradingController {
         map.put("record",recordService.getAllRecord());
 
         return map;
-    }
-
-    @RequestMapping("/hello")
-    public @ResponseBody Content greetings() throws Exception {
-        //Thread.sleep(1000); // simulated delay
-        System.out.println();
-        return new Content("this");
     }
 
     @MessageMapping("/addOrder")

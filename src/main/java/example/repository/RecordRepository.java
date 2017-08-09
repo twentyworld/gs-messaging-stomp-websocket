@@ -23,6 +23,9 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     //add
     Record save(Record record);
 
+    @Query(value = "select * from record where times between ?1 and ?2 order by times desc limit 1",nativeQuery = true)
+    Record getRecordByTimes(Timestamp times1,Timestamp times2);
+
 
 
 }

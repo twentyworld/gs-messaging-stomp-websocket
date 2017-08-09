@@ -21,13 +21,9 @@ import java.util.Map;
 public class FOKOrderService {
     @Autowired
     private OrderBookRepository orderBookRepository;
-
     public List<RawOrder> getAll(){
         return orderBookRepository.findAll();
     }
-
-
-
     public static String printSelf() {
         return "FOK";
     }
