@@ -2,6 +2,7 @@ package example.controller;
 
 import example.entity.StockDailyRecord;
 import example.entity.StocksFluctuationRange;
+import example.service.RecordService;
 import example.service.StockDailyRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,10 @@ public class StockController {
 
     @Autowired
     private StockDailyRecordService stockDailyRecordService;
+
+    @Autowired
+    private RecordService recordService;
+
 
     @RequestMapping("/getAllStockDailyRecord")
     public @ResponseBody List<StockDailyRecord> getAllStockDailyRecord(){
@@ -57,6 +62,8 @@ public class StockController {
 
         for(StockDailyRecord stockDailyRecord:list){
 
+            String Symbol = stockDailyRecord.getSymbol();
+            recordService.getRecordByName(Symbol);
 
         }
         return new ArrayList<StocksFluctuationRange>();

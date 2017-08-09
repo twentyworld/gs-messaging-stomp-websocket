@@ -1,0 +1,260 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/trade.css" media="all" rel="stylesheet"/>
+    <script src="../js/trade.js"></script>
+</head>
+<body data-lang="zh-cn" id="markets-show">
+<header class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-left" id="menu">
+            <a class="navbar-brand" href="/"></a>
+            <a class="navbar-text hover-able" data-hover-target="#market_list" href="#" style="color: #BBB">VIEW ALL MARKETS</a>
+            <p class="navbar-text hover-able" data-hover-target="#market_list" style="color: #BBB">
+                <span class="market">BCC/CNY</span>
+            </p>
+            <p class="navbar-text hover-able" data-hover-target="#market_list">
+                <span data-title="CHANGE" style="float: left; display: block;">
+                    <span class="change"></span>
+                </span>
+                <span data-title="VOLUME" style="float: left; display: block;">
+                    <span class="vol"></span>
+                </span>
+            </p>
+        </ul>
+        <ul class="nav navbar-nav navbar-right"><p id="traderId" class="navbar-text">123456789</p></ul>
+    </div>
+</header>
+<div id="wrap">
+    <div class="content">
+        <div id="market_trades">
+            <div class="panel panel-default">
+                <div class="panel-body panel-body-head">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="at col-xs-9 text-left"><b><span class="name">Trades</span></b></th>
+                            <th class="price col-xs-7 text-right">Price</th>
+                            <th class="volume col-xs-8 text-right">Volume</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="panel-body panel-body-content">
+                    <table class="table table-hover all-trades">
+                        <tbody></tbody>
+                    </table>
+                    <table class="table table-hover my-trades">
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--<div class="hover-target" id="market_list">-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-body panel-body-head">-->
+                    <!--<table class="table">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th class="col-xs-4"><b><span class="name">Markets</span></b></th>-->
+                            <!--<th class="text-right col-xs-4">Price</th>-->
+                            <!--<th class="text-right col-xs-3">Change</th>-->
+                            <!--<th class="text-right col-xs-5">Volume</th>-->
+                            <!--<th class="text-right col-xs-4">High</th>-->
+                            <!--<th class="text-right col-xs-4">Low</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div id="candlestick">
+            <iframe frameborder="0" height="100%" scrolling="no"
+                    src="../echarts/echart.html"
+                    width="100%"></iframe>
+        </div>
+        <div class="panel panel-default" id="order_book">
+            <div class="panel-body panel-body-head">
+                <div class="row" id="order_book_header">
+                    <div class="col-xs-12 col-left">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="amount text-right col-xs-8">Value</th>
+                                <th class="volume text-right col-xs-8">Volume</th>
+                                <th class="price text-right col-xs-8">BID</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-xs-12">
+                        <table class="table table-head">
+                            <thead>
+                            <tr>
+                                <th class="price text-left col-xs-8">ASK</th>
+                                <th class="volume text-left col-xs-8">Volume</th>
+                                <th class="amount text-left col-xs-8">Value</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body panel-body-content">
+                <div class="row" id="order_book_body">
+                    <div class="col-xs-12 col-left">
+                        <table class="table table-hover bids">
+                            <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12">
+                        <table class="table table-hover asks">
+                            <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="panel panel-default" id="depths_wrapper">-->
+            <!--<div class="panel-body panel-body-content">-->
+                <!--<div class="strategy str_one"><span class="fok">FOK</span><span class="gtc">GTC</span></spa></div>-->
+                <!--<div class="strategy str_two"><span class="ioc">IOC</span><span class="market_orders">Market Orders</span></div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="panel panel-default" id="my_orders">
+            <div class="panel-body panel-body-head">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-xs-6"><b><span class="name">My Orders</span></b></th>
+                        <th class="text-right col-xs-6"><span class="name">Price</span></th>
+                        <th class="text-right col-xs-6"><span class="name">Volume</span></th>
+                        <th class="text-right col-xs-6"><span class="name">Value</span></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="panel-body panel-body-content">
+                <div class="empty-row">You have no open orders.</div>
+                <table class="table table-hover">
+                    <tbody></tbody>
+                </table>
+            </div>
+            <ul class="panel-footer">
+                <li><a data-confirm="Are you sure to cancel all BIDS?" data-method="post" data-remote="true"
+                       href="/markets/bcccny/order_bids/clear" rel="nofollow"><i
+                        class='fa fa-trash'></i><span>Cancel Bids</span></a></li>
+                <li><a data-confirm="Are you sure to cancel all ASKS?" data-method="post" data-remote="true"
+                       href="/markets/bcccny/order_asks/clear" rel="nofollow"><i
+                        class='fa fa-trash'></i><span>Cancel Asks</span></a></li>
+                <li><a data-confirm="Are you sure to cancel ALL orders?" data-method="post" data-remote="true"
+                       href="/markets/bcccny/orders/clear" rel="nofollow"><i
+                        class='fa fa-trash'></i><span>Cancel ALl</span></a></li>
+            </ul>
+        </div>
+        <div class="panel panel-default entry-left" id="ask_entry">
+            <div class="panel-body">
+                <form accept-charset="UTF-8" action="http://localhost:9001/addOrder" class="new_order_ask"
+                      data-remote="true" id="new_order_ask" method="post">
+                    <div style="margin:0;padding:0;display:inline">
+                        <input name="utf8" type="hidden" value="&#x2713;"/>
+                        <input name="authenticity_token" type="hidden" value="6HHAAiP/UfQQ9hTRF35/QsYcGWSFqxLVH7dvhd8tJoY="/>
+                    </div>
+                    <input id="order_ask_ord_type" name="order_ask[ord_type]" type="hidden" value="limit"/>
+                    <div class="input-group strategy">
+                        <select class="form-control">
+                            <option>Please Choose Strategy </option>
+                            <option>FOK</option>
+                            <option>GTC</option>
+                            <option>IOC</option>
+                            <option>Market Orders</option>
+                        </select>
+                    </div>
+                    <div class="input-group price">
+                        <input autocomplete="off" class="form-control" id="order_ask_price" name="order_ask[price]" type="text"/>
+                        <span class="input-group-addon">Price [CNY]</span>
+                    </div>
+                    <div class="input-group amount">
+                        <input autocomplete="off" class="form-control" id="order_ask_origin_volume" name="order_ask[origin_volume]" type="text"/>
+                        <span class="input-group-addon">Amount [BCC]</span>
+                    </div>
+                    <div class="input-group total"><input autocomplete="off" class="form-control" id="order_ask_total" name="order_ask[total]" type="text"/>
+                        <span class="input-group-addon">Total [CNY]</span>
+                    </div>
+                    <!--<div class="row row-tips">-->
+                        <!--<div class="col-xs-24 text-right"><span class="label label-info status-info"></span><span-->
+                                <!--class="label label-success status-success"></span><span-->
+                                <!--class="label label-danger status-danger"></span><span-->
+                                <!--class="current-balance number"></span><span class="unit">BCC</span></div>-->
+                    <!--</div>-->
+                    <button class="btn btn-danger btn-block text-down" type="button" onclick="orderSubmit(0)">Sell BCC</button>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default entry-right" id="bid_entry">
+            <div class="panel-body">
+                <form accept-charset="UTF-8" action="/markets/bcccny/order_bids" class="new_order_bid"
+                      data-remote="true" id="new_order_bid" method="post">
+                    <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden"
+                                                                          value="&#x2713;"/><input
+                            name="authenticity_token" type="hidden"
+                            value="6HHAAiP/UfQQ9hTRF35/QsYcGWSFqxLVH7dvhd8tJoY="/></div>
+                    <input id="order_bid_ord_type" name="order_bid[ord_type]" type="hidden" value="limit"/>
+
+                    <div class="input-group strategy">
+                        <select class="form-control">
+                            <option>Please Choose Strategy </option>
+                            <option>FOK</option>
+                            <option>GTC</option>
+                            <option>IOC</option>
+                            <option>Market Orders</option>
+                        </select>
+                    </div>
+                    <div class="input-group price"><input autocomplete="off" class="form-control" id="order_bid_price" name="order_bid[price]" type="text"/>
+                        <span class="input-group-addon">Price [CNY]</span>
+                    </div>
+                    <div class="input-group amount"><input autocomplete="off" class="form-control" id="order_bid_origin_volume" name="order_bid[origin_volume]" type="text"/>
+                        <span class="input-group-addon">Amount [BCC]</span>
+                    </div>
+                    <div class="input-group total"><input autocomplete="off" class="form-control" id="order_bid_total" name="order_bid[total]" type="text"/>
+                        <span class="input-group-addon">Total [CNY]</span>
+                    </div>
+                    <!--<div class="row row-tips">-->
+                        <!--<div class="col-xs-24 text-right"><span class="label label-info status-info"></span><span-->
+                                <!--class="label label-success status-success"></span><span-->
+                                <!--class="label label-danger status-danger"></span><span-->
+                                <!--class="current-balance number"></span><span class="unit">CNY</span></div>-->
+                    <!--</div>-->
+                    <button class="btn btn-danger btn-block text-up" type="button" onclick="orderSubmit(1)">Buy BCC</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
