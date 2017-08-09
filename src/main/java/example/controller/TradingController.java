@@ -88,6 +88,7 @@ public class TradingController {
         return orderService.getOrderBookBySymbol(symbol);
     }
 
+
     @RequestMapping("/getStockUpsAndDowns")
     public @ResponseBody List<StocksFluctuationRange> getStockUpsAndDowns(){
         List<StocksFluctuationRange> lists = new ArrayList<>();

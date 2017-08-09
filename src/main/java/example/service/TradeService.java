@@ -37,7 +37,7 @@ public class TradeService {
 
     public List<RawOrder> init(){
         //BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("/Users/temperlee/Desktop")));
-        File file = new File("/Users/temperlee/Desktop/tradedata");
+        File file = new File("C:\\Users\\w\\Desktop\\tradedata.txt");
         try {
             FileReader fileReader = new FileReader(file);
 
@@ -55,8 +55,6 @@ public class TradeService {
                 System.out.println(order);
                 orderBookRepository.save(order);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,7 +78,6 @@ public class TradeService {
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,9,47,38,0),128.5,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,9,51,39,0),128.5,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,9,57,40,0),127.9,40,"ABT","FOK"));
-
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,7,23,0),129.5,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,12,24,0),126.5,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,15,25,0),128.7,40,"ABT","FOK"));
@@ -98,14 +95,31 @@ public class TradeService {
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,47,37,0),125.5,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,49,38,0),124.9,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,51,39,0),123.5,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,53,40,0),124.7,40,"ABT","FOK"));
-
-        //recordRepository.save(new Record(234567,345678,new Timestamp(System.currentTimeMillis()),125.3,40,"ABT","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,53,40,0),124.3,40,"ABT","FOK"));
 
 
 
-        stockDailyRecordRepository.save(new StockDailyRecord("ABT",new Timestamp(117,8,10,15,0,0,0),123.5,124.7));
-        stockDailyRecordRepository.save(new StockDailyRecord("ABT",new Timestamp(117,8,10,15,0,0,0),123.5,124.7));
+        stockDailyRecordRepository.save(new StockDailyRecord("ABT",new Timestamp(117,8,10,18,0,0,0),123.5,123.5));
+        stockDailyRecordRepository.save(new StockDailyRecord("ABBV",new Timestamp(117,8,10,18,0,0,0),123.5,25.1200008392334));
+        stockDailyRecordRepository.save(new StockDailyRecord("ACN",new Timestamp(117,8,10,18,0,0,0),123.5,35.010001373291016));
+        stockDailyRecordRepository.save(new StockDailyRecord("ACE",new Timestamp(117,8,10,18,0,0,0),123.5,52.539998626708984));
+        stockDailyRecordRepository.save(new StockDailyRecord("ADBE",new Timestamp(117,8,10,18,0,0,0),123.5,63.059999084472656));
+        stockDailyRecordRepository.save(new StockDailyRecord("ADT",new Timestamp(117,8,10,18,0,0,0),123.5,39.060001373291016));
+        stockDailyRecordRepository.save(new StockDailyRecord("DAL",new Timestamp(117,8,10,18,0,0,0),123.5,46.89000015258789));
+        stockDailyRecordRepository.save(new StockDailyRecord("XRAY",new Timestamp(117,8,10,18,0,0,0),123.5,7.059999847412109));
+        stockDailyRecordRepository.save(new StockDailyRecord("DVN",new Timestamp(117,8,10,18,0,0,0),123.5,48.22999954223633));
+        stockDailyRecordRepository.save(new StockDailyRecord("DO",new Timestamp(117,8,10,18,0,0,0),123.5,61.05999984741211));
+        stockDailyRecordRepository.save(new StockDailyRecord("INTC",new Timestamp(117,8,10,18,0,0,0),123.5,37.020001220703125));
+        stockDailyRecordRepository.save(new StockDailyRecord("ICE",new Timestamp(117,8,10,18,0,0,0),123.5,23.610000228881836));
+        stockDailyRecordRepository.save(new StockDailyRecord("IBM",new Timestamp(117,8,10,18,0,0,0),123.5,55.70000076293945));
+        stockDailyRecordRepository.save(new StockDailyRecord("IP",new Timestamp(117,8,10,18,0,0,0),123.5,57.95));
+        stockDailyRecordRepository.save(new StockDailyRecord("NOC",new Timestamp(117,8,10,18,0,0,0),123.5,48.799998474121094));
+        stockDailyRecordRepository.save(new StockDailyRecord("NRG",new Timestamp(117,8,10,18,0,0,0),123.5,28.909999084472656));
+        stockDailyRecordRepository.save(new StockDailyRecord("NUE",new Timestamp(117,8,10,18,0,0,0),123.5,51.409999084472656));
+        stockDailyRecordRepository.save(new StockDailyRecord("NVDA",new Timestamp(117,8,10,18,0,0,0),123.5,15.94000015258789));
+        stockDailyRecordRepository.save(new StockDailyRecord("TSO",new Timestamp(117,8,10,18,0,0,0),123.5,6.299999809265137));
+        stockDailyRecordRepository.save(new StockDailyRecord("TXN",new Timestamp(117,8,10,18,0,0,0),123.5,61.449998474121094));
+
 
 
 
