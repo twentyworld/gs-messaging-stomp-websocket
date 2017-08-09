@@ -51,24 +51,20 @@ public class OrderService {
             map.put("reject", true);
             return map;
         }
-
-        for(RawOrder temp : orders){
-            if(temp.getIsBuy()!=order.getIsBuy() && temp.getPrice()==order.getPrice()) {
-                if (temp.getQuantity()==order.getQuantity()) {
-                    List<RawOrder> add = new ArrayList<>();
-                    add.add(temp);
-                    orderBookRepository.delete(temp);
-                    map.put("delete", add);
-                } else if (temp.getQuantity()> order.getQuantity()) {
-                    temp.setQuantity(temp.getQuantity() - order.getQuantity());
-                    orderBookRepository.save(temp);
-                    map.put("update", temp);
-                } else if (temp.getQuantity() < order.getQuantity()) map.put("reject", true);
-                else
-                    map.put("reject", true);
-                break;
-            }
+/************change begin*****************/
+        //选择策略的种类
+        OrderType ordertype = new OrderType();
+        if (type.equals("FOK")) {
+            ordertype.useFOK(orders,order,map,orderBookRepository);
+        } else if (type.equals("GTC")) {
+            ordertype.useGTC(orders,order,map,orderBookRepository);
+        } else if (type.equals("IOC")) {
+            ordertype.useIOC(orders,order,map,orderBookRepository);
+        } else if (type.equals("MarketOrders")) {
+            ordertype.useMarketOrders(orders,order,map,orderBookRepository);
         }
+
+        /************change end***********************/
         return map;
     }
 
