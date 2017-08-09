@@ -36,6 +36,7 @@ public class TradingController {
     @Autowired
     SimpMessageSendingOperations simpMessageSendingOperations;
 
+
     @MessageMapping("/hello")
     @SendTo(value = "/topic/greetings")
     public @ResponseBody Map<String,Object> greeting(Message message) throws Exception {
