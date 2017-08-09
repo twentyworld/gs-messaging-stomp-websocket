@@ -92,11 +92,14 @@ public class TradingController {
     public @ResponseBody List<StocksFluctuationRange> getStockUpsAndDowns(){
         List<StocksFluctuationRange> lists = new ArrayList<>();
         lists.add(new StocksFluctuationRange("ABT",1.2,123.7,50));
-        lists.add(new StocksFluctuationRange("ABBV",-0.2,123.7,50));
+        lists.add(new StocksFluctuationRange("ABBV",-0.2,126.7,50));
         lists.add(new StocksFluctuationRange("ACN",3.4,123.7,50));
         lists.add(new StocksFluctuationRange("ADBE",-2.3,123.7,50));
 
-
+        lists.add(new StocksFluctuationRange("AES",1.7,128.7,50));
+        lists.add(new StocksFluctuationRange("AET",-0.8,123.7,50));
+        lists.add(new StocksFluctuationRange("AFL",6.4,103.7,50));
+        lists.add(new StocksFluctuationRange("AMG",-0.3,1123.7,50));
 
 
         return lists;
