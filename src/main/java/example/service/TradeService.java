@@ -1,14 +1,16 @@
 package example.service;
 
+import example.entity.IndexOfBroker;
 import example.entity.RawOrder;
 import example.entity.Record;
 import example.entity.StockDailyRecord;
+import example.repository.IndexRepository;
 import example.repository.OrderBookRepository;
 import example.repository.RecordRepository;
 import example.repository.StockDailyRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.sql.Timestamp;
@@ -29,15 +31,17 @@ public class TradeService {
     private OrderBookRepository orderBookRepository;
     @Autowired
     private StockDailyRecordRepository stockDailyRecordRepository;
+    @Autowired
+    private IndexRepository indexRepository;
 
     public List<RawOrder> BidSort(RawOrder order){
         List<RawOrder> bids = orderBookRepository.findBySymbol("order");
         return bids;
     }
 
-    public List<RawOrder> init(){
+    public List<RawOrder> init() throws FileNotFoundException {
         //BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("/Users/temperlee/Desktop")));
-        File file = new File("C:\\Users\\w\\Desktop\\tradedata.txt");
+        File file = ResourceUtils.getFile("classpath:inputIntoDatabase/tradeData.txt");
         try {
             FileReader fileReader = new FileReader(file);
 
@@ -123,14 +127,109 @@ public class TradeService {
 
 
 
+        //File file1 = new File("classpath:/inputIntoDatabase/道琼斯历史行情 - Investing.com.csv");
+        File file1 = ResourceUtils.getFile("classpath:inputIntoDatabase/上证指数历史行情 - Investing.com.csv");
+        try {
+            FileReader fileReader = new FileReader(file1);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = null;
+            int lineNum=0;
+            while((line = bufferedReader.readLine())!= null){
+                lineNum++;
+                String[] lines = line.split(",");
+                String name = "道琼斯历史行情";
+                Timestamp times = new Timestamp(0);
+                times.setYear(Integer.parseInt(lines[0].split("\"")[1].split("年")[0]));
+                times.setMonth(Integer.parseInt(lines[0].split("\"")[1].split("年")[1].split("月")[0]));
+                times.setDate(Integer.parseInt(lines[0].split("\"")[1].split("年")[1].split("月")[1].split("日")[0]));
+                double openPrice = proc(lines[3].split("\"")[1]+lines[4].split("\"")[0]);
+                double high = proc(lines[5].split("\"")[1]+lines[6].split("\"")[0]);
+                double low = proc(lines[7].split("\"")[1]+lines[8].split("\"")[0]);
+                double quantity =(int)procMandK(lines[9]);
+                double range = Double.parseDouble(lines[10].split("\"")[1]);
+                IndexOfBroker index = new IndexOfBroker(name,times,openPrice,high,low,quantity,range);
+                indexRepository.save(index);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        File file2 = ResourceUtils.getFile("classpath:inputIntoDatabase/上证指数历史行情 - Investing.com.csv");
+        try {
+            FileReader fileReader = new FileReader(file2);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = null;
+            int lineNum=0;
+            while((line = bufferedReader.readLine())!= null){
+                lineNum++;
+                String[] lines = line.split(",");
+                String name = "纳斯达克历史行情";
+                Timestamp times = new Timestamp(0);
+                times.setYear(Integer.parseInt(lines[0].split("\"")[1].split("年")[0]));
+                times.setMonth(Integer.parseInt(lines[0].split("\"")[1].split("年")[1].split("月")[0]));
+                times.setDate(Integer.parseInt(lines[0].split("\"")[1].split("年")[1].split("月")[1].split("日")[0]));
+                double openPrice = proc(lines[3].split("\"")[1]+lines[4].split("\"")[0]);
+                double high = proc(lines[5].split("\"")[1]+lines[6].split("\"")[0]);
+                double low = proc(lines[7].split("\"")[1]+lines[8].split("\"")[0]);
+                double quantity =(int)procMandK(lines[9]);
+                double range = Double.parseDouble(lines[10].split("\"")[1]);
+                IndexOfBroker index = new IndexOfBroker(name,times,openPrice,high,low,quantity,range);
+                indexRepository.save(index);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
+        File file3 = ResourceUtils.getFile("classpath:inputIntoDatabase/上证指数历史行情 - Investing.com.csv");
+        try {
+            FileReader fileReader = new FileReader(file3);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = null;
+            int lineNum=0;
+            while((line = bufferedReader.readLine())!= null){
+                lineNum++;
+                String[] lines = line.split(",");
+                String name = "上证指数历史行情";
+                Timestamp times = new Timestamp(0);
+                times.setYear(Integer.parseInt(lines[0].split("\"")[1].split("年")[0]));
+                times.setMonth(Integer.parseInt(lines[0].split("\"")[1].split("年")[1].split("月")[0]));
+                times.setDate(Integer.parseInt(lines[0].split("\"")[1].split("年")[1].split("月")[1].split("日")[0]));
+                double openPrice = proc(lines[3].split("\"")[1]+lines[4].split("\"")[0]);
+                double high = proc(lines[5].split("\"")[1]+lines[6].split("\"")[0]);
+                double low = proc(lines[7].split("\"")[1]+lines[8].split("\"")[0]);
+                double quantity =(int)procMandK(lines[9]);
+                double range = Double.parseDouble(lines[10].split("\"")[1]);
+                IndexOfBroker index = new IndexOfBroker(name,times,openPrice,high,low,quantity,range);
+                indexRepository.save(index);
 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 
         return orderBookRepository.findAll();
     }
+    public  double proc(String string){
 
+        if(string.contains(",")){
+            String[] strings = string.split(",");
+            String newStr = strings[0]+strings[1];
+            return Double.parseDouble(newStr);
+        }
+        return Double.parseDouble(string);
+    }
+
+    public double procMandK(String string){
+        if(string.contains("M"))
+            return Double.parseDouble(string.split("\"")[1].split("M")[0])*1000000;
+        else if(string.contains("K"))
+            return Double.parseDouble(string.split("\"")[1].split("K")[0])*1000;
+        else return 0;
+    }
 
 }

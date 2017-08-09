@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +72,7 @@ public class TradingController {
 
     //here in the place to initial the database.
     @RequestMapping("/initialization")
-    public List<RawOrder> initialization(){
+    public List<RawOrder> initialization() throws FileNotFoundException {
         return tradeService.init();
         //return orderBookRepository.findAll();
     }
