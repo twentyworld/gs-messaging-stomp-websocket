@@ -96,6 +96,9 @@ public class TradingController {
         lists.add(new StocksFluctuationRange("ACN",3.4));
         lists.add(new StocksFluctuationRange("ADBE",-2.3));
 
+
+
+
         return lists;
     }
 

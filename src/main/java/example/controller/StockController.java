@@ -1,6 +1,7 @@
 package example.controller;
 
 import example.entity.StockDailyRecord;
+import example.entity.StocksFluctuationRange;
 import example.service.StockDailyRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +48,20 @@ public class StockController {
         long timeMills = Long.parseLong(request.getParameter("symbol"));
         Timestamp times = new Timestamp(timeMills);
         return stockDailyRecordService.getStockDailyRecordByTimes(times);
+    }
+
+    @RequestMapping("/getFluctuationRange")
+    public @ResponseBody List<StocksFluctuationRange> getFluctuationRange(){
+
+        List<StockDailyRecord> list = getAllStockDailyRecord();
+
+        for(StockDailyRecord stockDailyRecord:list){
+
+
+        }
+        return new ArrayList<StocksFluctuationRange>();
+
+
     }
 
 
