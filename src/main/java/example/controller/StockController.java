@@ -1,5 +1,6 @@
 package example.controller;
 
+import example.entity.Record;
 import example.entity.StockDailyRecord;
 import example.entity.StocksFluctuationRange;
 import example.service.RecordService;
@@ -57,13 +58,15 @@ public class StockController {
 
     @RequestMapping("/getFluctuationRange")
     public @ResponseBody List<StocksFluctuationRange> getFluctuationRange(){
-
         List<StockDailyRecord> list = getAllStockDailyRecord();
-
         for(StockDailyRecord stockDailyRecord:list){
-
             String Symbol = stockDailyRecord.getSymbol();
-            recordService.getRecordByName(Symbol);
+            List<Record> listRecord = recordService.getRecordByName(Symbol);
+
+            for(int i = 0;i<listRecord.size();i++){
+
+            }
+
 
         }
         return new ArrayList<StocksFluctuationRange>();

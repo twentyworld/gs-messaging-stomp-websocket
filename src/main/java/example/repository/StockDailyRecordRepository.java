@@ -15,7 +15,7 @@ public interface StockDailyRecordRepository extends Repository<StockDailyRecord,
     StockDailyRecord save(StockDailyRecord stockDailyRecord);
     List<StockDailyRecord> findAll();
     List<StockDailyRecord> findBySymbol(String symbol);
-    List<StockDailyRecord> findBySymboAndTimes(String symbol, Timestamp times);
+    List<StockDailyRecord> findBySymbolAndTimes(String symbol, Timestamp times);
     List<StockDailyRecord> findByTimes(Timestamp times);
 
 }

@@ -27,7 +27,7 @@ public class StockDailyRecordService {
     }
 
     public List<StockDailyRecord> getStockDailyRecordBySymbolAndTimes(String symbol, Timestamp timestamp){
-        return stockDailyRecordRepository.findBySymboAndTimes(symbol,timestamp);
+        return stockDailyRecordRepository.findBySymbolAndTimes(symbol,timestamp);
     }
 
     public void AddStockDailyRecord(StockDailyRecord stockDailyRecord){
