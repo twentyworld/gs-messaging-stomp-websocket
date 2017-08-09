@@ -8,13 +8,33 @@ package example.entity;
 public class StocksFluctuationRange {
     private String symbol;
     private double range;
+    private double latestPrice;
+    private int quantity;
 
     public StocksFluctuationRange() {
     }
 
-    public StocksFluctuationRange(String symbol, double range) {
+    public StocksFluctuationRange(String symbol, double range, double latestPrice, int quantity) {
         this.symbol = symbol;
         this.range = range;
+        this.latestPrice = latestPrice;
+        this.quantity = quantity;
+    }
+
+    public double getLatestPrice() {
+        return latestPrice;
+    }
+
+    public void setLatestPrice(double latestPrice) {
+        this.latestPrice = latestPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getSymbol() {

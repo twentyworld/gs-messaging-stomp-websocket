@@ -91,10 +91,10 @@ public class TradingController {
     @RequestMapping("/getStockUpsAndDowns")
     public @ResponseBody List<StocksFluctuationRange> getStockUpsAndDowns(){
         List<StocksFluctuationRange> lists = new ArrayList<>();
-        lists.add(new StocksFluctuationRange("ABT",1.2));
-        lists.add(new StocksFluctuationRange("ABBV",-0.2));
-        lists.add(new StocksFluctuationRange("ACN",3.4));
-        lists.add(new StocksFluctuationRange("ADBE",-2.3));
+        lists.add(new StocksFluctuationRange("ABT",1.2,123.7,50));
+        lists.add(new StocksFluctuationRange("ABBV",-0.2,123.7,50));
+        lists.add(new StocksFluctuationRange("ACN",3.4,123.7,50));
+        lists.add(new StocksFluctuationRange("ADBE",-2.3,123.7,50));
 
 
 

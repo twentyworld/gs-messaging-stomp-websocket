@@ -63,6 +63,7 @@ public class StockController {
             String Symbol = stockDailyRecord.getSymbol();
             List<Record> listRecord = recordService.getRecordByName(Symbol);
 
+
             for(int i = 0;i<listRecord.size();i++){
 
             }
