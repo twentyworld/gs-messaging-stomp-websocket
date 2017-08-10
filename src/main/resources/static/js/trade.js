@@ -151,7 +151,7 @@ function forbidInput(value,isBuy) {
     }
 }
 function sendOrder(ops) {
-    alert('您的订单已提交!');
+    // alert('您的订单已提交!');
     if(ops==1){
         var userId = $('#traderId').html();
         //alert(userId);
@@ -173,7 +173,7 @@ function sendOrder(ops) {
             'symbol':symbol,
             'strategy':strategy
         }));
-
+        addMyOrder(isBuy,price,amount,$('#order_bid_total').val());
         $('#order_bid_price').val('');
         $('#order_bid_origin_volume').val('');
         $('#order_bid_total').val('');
@@ -200,9 +200,11 @@ function sendOrder(ops) {
             'symbol':symbol,
             'strategy':strategy
         }));
+        addMyOrder(isBuy,price,amount,$('#order_ask_total').val());
         $('#order_ask_price').val('');
         $('#order_ask_origin_volume').val('');
         $('#order_ask_total').val('');
+
     }
 
 }
@@ -218,9 +220,22 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/addOrder', function (data) {
             console.log(data);
+            var jsons = JSON.parse(data.body);
+            var record = jsons.record;
+            var orderBook = jsons.orderBook
             $('#bidOrder').html('');
             $('#askOrder').html('');
-            getOrderBook();
+            renewOrderBook(orderBook);
+            $("#tradeHistory").html('');
+            renewOrderHistory(record);
+        });
+        stompClient.subscribe('/user/'+ $('#traderId').html() + '/message', function (data) {
+            var jsons = JSON.parse(data.body);
+            if(jsons.reject=="true"){
+                alert("Your Order Transaction failed!");
+            }else {
+                alert("Your Order Transaction was Successful!")
+            }
         });
     });
 }
@@ -243,5 +258,43 @@ function computeTotal(isBuy) {
         }
         $('#order_ask_total').val(total);
     }
+
+}
+
+function renewOrderHistory(record) {
+    $(record).each(function(index,obj){
+        var time = getMyDate(obj.times);
+        var price = obj.price.toFixed(4);
+        var oldHtml = $("#tradeHistory").html();
+        var newHtml = '<tr><td class="time text-left col-xs-7"><div style="display: block">'+time+'</div></td> <td class="my text-left col-xs-2"><div style="display:none;"><i class="fa fa-star"></i></div></td> <td class="price text-right col-xs-7 text-down"><div style="display: block">'+price+'</div></td> <td class="volume text-right col-xs-8"><div style="display: block">'+obj.quantity+'</div></td> </tr>';
+        $("#tradeHistory").html(oldHtml+newHtml);
+    })
+}
+
+function renewOrderBook(orderBook) {
+    $(orderBook).each(function(index,obj){
+        var price = parseFloat(obj.price.toFixed(4));
+        var quantity = parseInt(obj.quantity);
+        var value = (price * quantity).toFixed(4);
+        if(obj.isBuy == 1){
+            var oldHtml = $('#bidOrder').html();
+            var newHtml = '<tr><td class="amount col-xs-8">'+value+'</td> <td class="volume col-xs-8">'+obj.quantity+'</td> <td class="price col-xs-8 text-up"><div style="display: block;"> <b>'+price+'</b> </div></td> </tr>';
+            $('#bidOrder').html(oldHtml+newHtml);
+        }else{
+            var price = parseFloat(obj.price.toFixed(4));
+            var quantity = parseInt(obj.quantity);
+            var value = (price * quantity).toFixed(4);
+            var oldHtml = $('#askOrder').html();
+            var newHtml = '<tr><td class="price col-xs-8 text-left text-down"><div style="display: block;"><b>'+price+'</b> </div></td> <td class="volume col-xs-8 text-left">'+obj.quantity+'</td> <td class="amount col-xs-8 text-left">'+value+'</td> </tr>';
+            $('#askOrder').html(oldHtml+newHtml);
+        }
+    })
+}
+
+function addMyOrder(isBuy, price, amount, total){
+    var status = isBuy == 1 ? 'Buy' : 'Sell';
+    var oldHtml = $("#myOrders").html();
+    var newHtml = '<tr><td class="time text-left col-xs-7"><div style="display: block">'+status+'</div></td> <td class="my text-left col-xs-2"><div style="display:none;"><i class="fa fa-star"></i></div></td> <td class="price text-right col-xs-7 text-down"><div style="display: block">'+price+'</div></td> <td class="price text-right col-xs-7 text-down"><div style="display: block">'+amount+'</div></td> <td class="volume text-right col-xs-8"><div style="display: block">'+total+'</div></td> </tr>';
+    $("#myOrders").html(oldHtml+newHtml);
 
 }
