@@ -61,7 +61,8 @@ public class TradingController {
 
         Collections.sort(orders);
         Collections.sort(records);
-        map.put("orderBook",orders);
+        map.put("orderBookBid",getOrderBy(orders,true));
+        map.put("orderBookAsk",getOrderBy(orders,false));
         map.put("record",records);
         map.put("stockRange",stockDailyRecordService.getStocksFluctuationRange());
         sendUserMessage(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size(),id);
@@ -71,6 +72,28 @@ public class TradingController {
 //            simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder("false"));
         return map;
     }
+
+    public List<RawOrder> getOrderBy(List<RawOrder> list,boolean flag){
+        List<RawOrder> listBuy = new ArrayList<>();
+        List<RawOrder> listSell = new ArrayList<>();
+
+        for(RawOrder order : list){
+            if (order.getIsBuy()==1)
+                listBuy.add(order);
+            else
+                listSell.add(order);
+        }
+
+        Collections.sort(listBuy);
+        Collections.sort(listSell);
+
+        if (flag)
+            return listBuy;
+        else return listSell;
+
+    }
+
+
     public void sendUserMessage(boolean flag,long id){
         simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder(flag+""));
     }

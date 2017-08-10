@@ -35,7 +35,7 @@ public class TradeService {
     private IndexRepository indexRepository;
 
     public List<RawOrder> BidSort(RawOrder order){
-        List<RawOrder> bids = orderBookRepository.findBySymbol("order");
+        List<RawOrder> bids = orderBookRepository.findBySymbolOrderByPriceDesc("order");
         return bids;
     }
 
