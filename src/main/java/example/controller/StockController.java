@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -74,10 +76,13 @@ public class StockController {
             double range = (latestRecord.getPrice()-stockDailyRecord.getClosePrice())/stockDailyRecord.getClosePrice();
             if(latestRecord.getSymbol()!=null){
                 DecimalFormat decimalFormat = new DecimalFormat("######0.0000");
-                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),Double.parseDouble(decimalFormat.format(range).toString()),latestRecord.getPrice(),latestRecord.getQuantity()));
+                range = Double.parseDouble(decimalFormat.format(range).toString());
+                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range,
+                        Double.parseDouble(decimalFormat.format(latestRecord.getPrice()).toString()), latestRecord.getQuantity()));
 
             }
         }
+        Collections.sort(rangeList);
         return rangeList;
     }
 

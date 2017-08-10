@@ -5,7 +5,7 @@ package example.entity;
  * copy as you like, but with these word.
  * at last, The forza horizon is really fun, buy is made, looking forward to driving together in the hurricane.
  */
-public class StocksFluctuationRange {
+public class StocksFluctuationRange implements Comparable<StocksFluctuationRange>{
     private String symbol;
     private double range;
     private double latestPrice;
@@ -51,5 +51,10 @@ public class StocksFluctuationRange {
 
     public void setRange(double range) {
         this.range = range;
+    }
+
+    @Override
+    public int compareTo(StocksFluctuationRange o) {
+        return new Double(o.range).compareTo(new Double(this.range));
     }
 }

@@ -35,5 +35,4 @@ public class RecordController {
         String symbol = request.getParameter("symbol");
         return recordService.getRecordByName(symbol);
     }
-
 }
