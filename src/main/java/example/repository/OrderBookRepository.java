@@ -18,7 +18,7 @@ public interface OrderBookRepository extends JpaRepository<RawOrder,Long> {
     List<RawOrder> findAll();
     void delete(RawOrder order);
 
-    List<RawOrder> findBySymbol(String symbol);
+    List<RawOrder> findBySymbolOrderByPriceDesc(String symbol);
     RawOrder findByTraderId(long id);
 
 

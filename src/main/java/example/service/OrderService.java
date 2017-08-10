@@ -31,7 +31,7 @@ public class OrderService {
 
 
     public List<RawOrder> getOrderBookBySymbol(String symbol){
-        return orderBookRepository.findBySymbol(symbol);
+        return orderBookRepository.findBySymbolOrderByPriceDesc(symbol);
     }
 
     //当我们增加一个order时，调用此方法。
@@ -49,7 +49,7 @@ public class OrderService {
         //取出所有同一symbol下的所有的order book
         System.out.println(order.getSymbol());
         // System.out.println(orderRepository.findByTraderId(1).getPrice());
-        List<RawOrder> orders = orderBookRepository.findBySymbol(order.getSymbol());
+        List<RawOrder> orders = orderBookRepository.findBySymbolOrderByPriceDesc(order.getSymbol());
         if(orders==null) {
             // map.put("reject", true);
             records.add(null);
