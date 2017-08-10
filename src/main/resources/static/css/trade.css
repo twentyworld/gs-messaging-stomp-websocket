@@ -14636,9 +14636,9 @@ header .navbar-text {
     display: inline
 }
 
-#market_trades .my-trades tbody {
-    display: none
-}
+/*#market_trades .my-trades tbody {*/
+    /*display: none*/
+/*}*/
 
 #market_list {
     display: none;

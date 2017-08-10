@@ -14,6 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="../css/trade.css" media="all" rel="stylesheet"/>
+    <script src="../js/jquery.min.js"></script>
     <script src="../js/trade.js"></script>
 </head>
 <body data-lang="zh-cn" id="markets-show">
@@ -57,7 +58,10 @@
                         <tbody></tbody>
                     </table>
                     <table class="table table-hover my-trades">
-                        <tbody></tbody>
+                        <tbody id="tradeHistory">
+
+
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -116,23 +120,15 @@
                 <div class="row" id="order_book_body">
                     <div class="col-xs-12 col-left">
                         <table class="table table-hover bids">
-                            <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            <tbody id="bidOrder">
+
                             </tbody>
                         </table>
                     </div>
                     <div class="col-xs-12">
                         <table class="table table-hover asks">
-                            <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            <tbody id="askOrder">
+
                             </tbody>
                         </table>
                     </div>
@@ -179,15 +175,14 @@
         </div>
         <div class="panel panel-default entry-left" id="ask_entry">
             <div class="panel-body">
-                <form accept-charset="UTF-8" action="http://localhost:9001/addOrder" class="new_order_ask"
+                <form accept-charset="UTF-8" action="/app/addOrder" class="new_order_ask"
                       data-remote="true" id="new_order_ask" method="post">
                     <div style="margin:0;padding:0;display:inline">
-                        <input name="utf8" type="hidden" value="&#x2713;"/>
-                        <input name="authenticity_token" type="hidden" value="6HHAAiP/UfQQ9hTRF35/QsYcGWSFqxLVH7dvhd8tJoY="/>
+                        <input name="isBuy" type="hidden" value="0"/>
+                        <input id="symbolFlag1" name="symbol" type="hidden"/>
                     </div>
-                    <input id="order_ask_ord_type" name="order_ask[ord_type]" type="hidden" value="limit"/>
                     <div class="input-group strategy">
-                        <select class="form-control">
+                        <select class="form-control" name="strategy">
                             <option>Please Choose Strategy </option>
                             <option>FOK</option>
                             <option>GTC</option>
@@ -196,11 +191,11 @@
                         </select>
                     </div>
                     <div class="input-group price">
-                        <input autocomplete="off" class="form-control" id="order_ask_price" name="order_ask[price]" type="text"/>
+                        <input autocomplete="off" class="form-control" id="order_ask_price" name="price" type="text"/>
                         <span class="input-group-addon">Price [CNY]</span>
                     </div>
                     <div class="input-group amount">
-                        <input autocomplete="off" class="form-control" id="order_ask_origin_volume" name="order_ask[origin_volume]" type="text"/>
+                        <input autocomplete="off" class="form-control" id="order_ask_origin_volume" name="amount" type="text"/>
                         <span class="input-group-addon">Amount [BCC]</span>
                     </div>
                     <div class="input-group total"><input autocomplete="off" class="form-control" id="order_ask_total" name="order_ask[total]" type="text"/>
@@ -212,22 +207,21 @@
                                 <!--class="label label-danger status-danger"></span><span-->
                                 <!--class="current-balance number"></span><span class="unit">BCC</span></div>-->
                     <!--</div>-->
-                    <button class="btn btn-danger btn-block text-down" type="button" onclick="orderSubmit(0)">Sell BCC</button>
+                    <button class="btn btn-danger btn-block text-down" type="submit">Sell BCC</button>
                 </form>
             </div>
         </div>
         <div class="panel panel-default entry-right" id="bid_entry">
             <div class="panel-body">
-                <form accept-charset="UTF-8" action="/markets/bcccny/order_bids" class="new_order_bid"
+                <form accept-charset="UTF-8" action="/app/addOrder" class="new_order_bid"
                       data-remote="true" id="new_order_bid" method="post">
-                    <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden"
-                                                                          value="&#x2713;"/><input
-                            name="authenticity_token" type="hidden"
-                            value="6HHAAiP/UfQQ9hTRF35/QsYcGWSFqxLVH7dvhd8tJoY="/></div>
-                    <input id="order_bid_ord_type" name="order_bid[ord_type]" type="hidden" value="limit"/>
+                    <div style="margin:0;padding:0;display:inline">
+                        <input name="isBuy" type="hidden" value="1"/>
+                        <input id="symbolFlag2" name="symbol" type="hidden"/>
+                    </div>
 
                     <div class="input-group strategy">
-                        <select class="form-control">
+                        <select class="form-control" name="strategy">
                             <option>Please Choose Strategy </option>
                             <option>FOK</option>
                             <option>GTC</option>
@@ -235,10 +229,10 @@
                             <option>Market Orders</option>
                         </select>
                     </div>
-                    <div class="input-group price"><input autocomplete="off" class="form-control" id="order_bid_price" name="order_bid[price]" type="text"/>
+                    <div class="input-group price"><input autocomplete="off" class="form-control" id="order_bid_price" name="price" type="text"/>
                         <span class="input-group-addon">Price [CNY]</span>
                     </div>
-                    <div class="input-group amount"><input autocomplete="off" class="form-control" id="order_bid_origin_volume" name="order_bid[origin_volume]" type="text"/>
+                    <div class="input-group amount"><input autocomplete="off" class="form-control" id="order_bid_origin_volume" name="amount" type="text"/>
                         <span class="input-group-addon">Amount [BCC]</span>
                     </div>
                     <div class="input-group total"><input autocomplete="off" class="form-control" id="order_bid_total" name="order_bid[total]" type="text"/>
@@ -250,7 +244,7 @@
                                 <!--class="label label-danger status-danger"></span><span-->
                                 <!--class="current-balance number"></span><span class="unit">CNY</span></div>-->
                     <!--</div>-->
-                    <button class="btn btn-danger btn-block text-up" type="button" onclick="orderSubmit(1)">Buy BCC</button>
+                    <button class="btn btn-danger btn-block text-up" type="submit">Buy BCC</button>
                 </form>
             </div>
         </div>
