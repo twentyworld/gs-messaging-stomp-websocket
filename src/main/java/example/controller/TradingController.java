@@ -4,11 +4,13 @@ package example.controller;
 import example.entity.*;
 import example.service.OrderService;
 import example.service.RecordService;
+import example.service.StockDailyRecordService;
 import example.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,39 +33,54 @@ public class TradingController {
     @Autowired
     RecordService recordService;
     @Autowired
-    SimpMessageSendingOperations simpMessageSendingOperations;
-
-
-    @MessageMapping("/hello")
-    @SendTo(value = "/topic/greetings")
-    public @ResponseBody Map<String,Object> greeting(Message message) throws Exception {
-
-        System.out.println(message.getName());
-        Map<String,Object> map = new HashMap<>();
-        map.put("record",recordService.getAllRecord());
-
-        return map;
-    }
-
+    StockDailyRecordService stockDailyRecordService;
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/addOrder")
     @SendTo("/topic/addOrder")
     public @ResponseBody List<RawOrder> addOrderMessage(SubmitOrder submitOrder){
         Map<String,Object> map = new HashMap<>();
+        long id = submitOrder.getId();
         int isBuy = submitOrder.getIsBuy();
         String symbol = submitOrder.getSymbol();
         double price = submitOrder.getPrice();
         int quantity = submitOrder.getQuantity();
         String strategy = submitOrder.getStrategy();
         System.out.println(isBuy+", "+symbol+", "+price+", "+quantity+", "+strategy);
-        RawOrder order = new RawOrder(1234567,isBuy,symbol,price,quantity);
+        RawOrder order = new RawOrder(id,isBuy,symbol,price,quantity);
         //String strategy = "FOK";
         //orderService = IOrderServiceFactory.getOrderService(strategy);
         System.out.println("zheli1 ");
-        orderService.addOrder(order,strategy);
+        //查询点之前。
+        List<Record> recordsBefore = recordService.getRecordByName(symbol);
+        List<RawOrder> orderBookBefore = orderService.getOrderBookBySymbol(symbol);
+
+        //添加order之后，
+        List<Record> recordOfAdd = orderService.addOrder(order,strategy);
         List<RawOrder> orders =orderService.getOrderBookBySymbol(symbol);
+        List<Record> records = recordService.getRecordByName(symbol);
+
+        sendUserMessage(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size(),id);
+
+
+//        if(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size())
+//            simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder("true"));
+//        else
+//            simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder("false"));
+
+
         return orders;
 
+    }
+    public void sendUserMessage(boolean flag,long id){
+        simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder(flag+""));
+    }
+
+    @MessageMapping("/message")
+    @SendToUser("/message")
+    public RejectOrder userMessage(RejectOrder rejectOrder) throws Exception {
+        return rejectOrder;
     }
 
     //here in the place to initial the database.
