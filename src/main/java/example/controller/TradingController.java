@@ -56,6 +56,7 @@ public class TradingController {
         List<Record> records = recordService.getRecordByName(symbol);
 
         Collections.sort(orders);
+        Collections.sort(records);
         map.put("orderBook",orders);
         map.put("record",records);
         map.put("stockRange",stockDailyRecordService.getStocksFluctuationRange());

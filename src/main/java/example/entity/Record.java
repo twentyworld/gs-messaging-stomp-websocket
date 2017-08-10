@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * at last, The forza horizon is really fun, buy is made, looking forward to driving together in the hurricane.
  */
 @Entity
-public class Record {
+public class Record  implements Comparable<Record>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -100,5 +100,11 @@ public class Record {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    @Override
+    public int compareTo(Record o) {
+        return Long.compare(this.getTimes().getTime(), o.getTimes().getTime());
     }
 }
