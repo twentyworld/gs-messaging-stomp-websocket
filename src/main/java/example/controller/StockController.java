@@ -77,7 +77,7 @@ public class StockController {
             if(latestRecord.getSymbol()!=null){
                 DecimalFormat decimalFormat = new DecimalFormat("######0.0000");
                 range = Double.parseDouble(decimalFormat.format(range).toString());
-                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range,
+                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range*100,
                         Double.parseDouble(decimalFormat.format(latestRecord.getPrice()).toString()), latestRecord.getQuantity()));
 
             }
