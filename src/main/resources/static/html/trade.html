@@ -173,7 +173,7 @@
                         <input id="symbolFlag1" name="symbol" type="hidden"/>
                     </div>
                     <div class="input-group strategy">
-                        <select class="form-control" name="strategy" id="ask_strategy">
+                        <select class="form-control" name="strategy" id="ask_strategy" onchange="forbidInput(this.value,0)">
                             <option>Please Choose Strategy </option>
                             <option>FOK</option>
                             <option>GTC</option>
@@ -182,14 +182,14 @@
                         </select>
                     </div>
                     <div class="input-group price">
-                        <input autocomplete="off" disabled="false" class="form-control" id="order_ask_price" name="price" type="text"/>
+                        <input autocomplete="off" class="form-control" id="order_ask_price" name="price" type="text" onchange="computeTotal(0)"/>
                         <span class="input-group-addon">Price [CNY]</span>
                     </div>
                     <div class="input-group amount">
-                        <input autocomplete="off" class="form-control" id="order_ask_origin_volume" name="amount" type="text"/>
+                        <input autocomplete="off" class="form-control" id="order_ask_origin_volume" name="amount" type="text" onchange="computeTotal(0)"/>
                         <span class="input-group-addon">Amount [BCC]</span>
                     </div>
-                    <div class="input-group total"><input autocomplete="off" disabled="false" class="form-control" id="order_ask_total" name="order_ask[total]" type="text"/>
+                    <div class="input-group total"><input autocomplete="off" class="form-control" id="order_ask_total" name="total" type="text"/>
                         <span class="input-group-addon">Total [CNY]</span>
                     </div>
                     <!--<div class="row row-tips">-->
@@ -212,7 +212,7 @@
                     </div>
 
                     <div class="input-group strategy">
-                        <select class="form-control" name="strategy" id="bid_strategy">
+                        <select class="form-control" name="strategy" id="bid_strategy" onchange="forbidInput(this.value,1)">
                             <option>Please Choose Strategy </option>
                             <option>FOK</option>
                             <option>GTC</option>
@@ -220,13 +220,13 @@
                             <option>MarketOrders</option>
                         </select>
                     </div>
-                    <div class="input-group price"><input autocomplete="off" disabled="false" class="form-control" id="order_bid_price" name="price" type="text"/>
+                    <div class="input-group price"><input autocomplete="off" class="form-control" id="order_bid_price" name="price"  type="text" onchange="computeTotal(1)"/>
                         <span class="input-group-addon">Price [CNY]</span>
                     </div>
-                    <div class="input-group amount"><input autocomplete="off" class="form-control" id="order_bid_origin_volume" name="amount" type="text"/>
+                    <div class="input-group amount"><input autocomplete="off" class="form-control" id="order_bid_origin_volume" name="amount" type="text" onchange="computeTotal(1)"/>
                         <span class="input-group-addon">Amount [BCC]</span>
                     </div>
-                    <div class="input-group total"><input autocomplete="off" disabled="false" class="form-control" id="order_bid_total" name="order_bid[total]" type="text"/>
+                    <div class="input-group total"><input autocomplete="off" class="form-control" id="order_bid_total" name="total" type="text"/>
                         <span class="input-group-addon">Total [CNY]</span>
                     </div>
                     <!--<div class="row row-tips">-->

@@ -8,7 +8,6 @@ html {
 body {
     margin: 0
 }
-
 article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
     display: block
 }
@@ -3511,7 +3510,7 @@ output {
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     cursor: not-allowed;
-    background-color: #eeeeee;
+    background-color: #1c1d1f;
     opacity: 1
 }
 

@@ -8,6 +8,13 @@ window.onload=function(){
     getOrderHistory();
     connect();
     showHeader();
+    $('#order_bid_price').attr("disabled",true);
+    $('#order_bid_origin_volume').attr("disabled",true);
+    $('#order_ask_price').attr("disabled",true);
+    $('#order_ask_origin_volume').attr("disabled",true);
+    $('#order_ask_total').attr("readOnly", true);
+    $('#order_bid_total').attr("readOnly", true);
+
 }
 window.onresize = function(){
     editHeight();
@@ -120,10 +127,27 @@ function getUrlParam(name) {
     if (r != null) return unescape(r[2]); return null; //返回参数值
 }
 
-function forbidInput() {
-    if($('#bid_strategy option:selected').val()=='IOC' || $('#bid_strategy option:selected').val()=='MarketOrders'){
-        $('#order_bid_price').attr("disabled",true);
-        $('#order_ask_total').attr("diaabled",true);
+function forbidInput(value,isBuy) {
+    if(isBuy == 1){
+        if (value== "IOC"||value=="marketOrders") {
+            $('#order_bid_price').attr("disabled",true);
+        }else if (value=="FOK"||value=="GTC") {
+            $('#order_bid_price').attr("disabled",false);
+            $('#order_bid_origin_volume').attr("disabled",false);
+        }else {
+            $('#order_bid_price').attr("disabled",true);
+            $('#order_bid_origin_volume').attr("disabled",true);
+        }
+    }else {
+        if(value== "IOC"||value== "marketOrders") {
+            $('#order_ask_price').attr("disabled",true);
+        }else if (value=="FOK"||value=="GTC") {
+            $('#order_ask_price').attr("disabled",false);
+            $('#order_ask_origin_volume').attr("disabled",false);
+        }else {
+            $('#order_ask_price').attr("disabled",true);
+            $('#order_ask_origin_volume').attr("disabled",true);
+        }
     }
 }
 function sendOrder(ops) {
@@ -149,6 +173,11 @@ function sendOrder(ops) {
             'symbol':symbol,
             'strategy':strategy
         }));
+
+        $('#order_bid_price').val('');
+        $('#order_bid_origin_volume').val('');
+        $('#order_bid_total').val('');
+
     }
     if(ops==0){
         var userId = $('#traderId').html();
@@ -171,6 +200,9 @@ function sendOrder(ops) {
             'symbol':symbol,
             'strategy':strategy
         }));
+        $('#order_ask_price').val('');
+        $('#order_ask_origin_volume').val('');
+        $('#order_ask_total').val('');
     }
 
 }
@@ -191,4 +223,25 @@ function connect() {
             getOrderBook();
         });
     });
+}
+
+function computeTotal(isBuy) {
+    if(isBuy==1) {
+        var price = parseFloat($('#order_bid_price').val());
+        var amount = parseInt($('#order_bid_origin_volume').val());
+        var total = 0;
+        if(price>0&&amount>0) {
+            total = (price * amount).toFixed(2);
+        }
+        $('#order_bid_total').val(total);
+    }else {
+        var price = parseFloat($('#order_ask_price').val());
+        var amount = parseInt($('#order_ask_origin_volume').val());
+        var total = 0;
+        if(price>0&&amount>0) {
+            total = (price * amount).toFixed(2);
+        }
+        $('#order_ask_total').val(total);
+    }
+
 }
