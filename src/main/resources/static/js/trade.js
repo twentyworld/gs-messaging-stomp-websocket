@@ -137,20 +137,26 @@ function sendOrder(ops) {
     }
 
 }
-// function setConnected(connected) {
-//     $("#order_book").prop("disabled", connected);
-//
-// }
+function setConnected(connected) {
+    $("#order_book").prop("disabled", connected);
+
+}
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/topic/addOrder', function (data) {
+            console.log(data);
+            if(data.reject>=0){
+                if(data.add!=null){
+
+                }
+            }
             //showGreeting(JSON.parse(greeting).content);
-            greeting = JSON.parse(greeting.body)
-            showGreeting(greeting.record[0].time);
+            // greeting = JSON.parse(greeting.body)
+            // showGreeting(greeting.record[0].time);
         });
     });
 }
