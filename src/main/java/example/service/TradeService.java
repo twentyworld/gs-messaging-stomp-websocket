@@ -101,25 +101,25 @@ public class TradeService {
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,51,39,0),123.5,40,"ABT","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,53,40,0),124.3,40,"ABT","FOK"));
 
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,9,51,39,0),25.1200008392334,40,"ABBV","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,9,57,40,0),35.010001373291016,40,"ACN","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,7,23,0),52.539998626708984,40,"ACE","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,12,24,0),63.059999084472656,40,"ADBE","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,15,25,0),39.060001373291016,40,"ADT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,19,26,0),46.89000015258789,40,"DAL","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,22,27,0),7.059999847412109,40,"XRAY","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,22,28,0),48.22999954223633,40,"DVN","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,24,29,0),61.05999984741211,40,"DO","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,27,30,0),37.020001220703125,40,"INTC","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,29,31,0),23.610000228881836,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,32,32,0),55.70000076293945,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,34,33,0),57.95,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,37,34,0),48.799998474121094,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,41,35,0),28.909999084472656,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,43,36,0),51.409999084472656,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,47,37,0),15.94000015258789,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,49,38,0),6.299999809265137,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,51,39,0),61.449998474121094,40,"ABT","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,9,51,39,0),25.4200008392334,40,"ABBV","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,9,57,40,0),35.510001373291016,40,"ACN","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,7,23,0),52.639998626708984,40,"ACE","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,12,24,0),65.059999084472656,40,"ADBE","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,15,25,0),38.060001373291016,40,"ADT","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,19,26,0),48.89000015258789,40,"DAL","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,22,27,0),7.359999847412109,40,"XRAY","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,22,28,0),45.22999954223633,40,"DVN","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,24,29,0),63.05999984741211,40,"DO","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,27,30,0),34.020001220703125,40,"INTC","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,29,31,0),25.610000228881836,40,"ICE","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,32,32,0),55.90000076293945,40,"IBM","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,34,33,0),59.95,40,"ABT","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,37,34,0),46.799998474121094,40,"IP","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,41,35,0),27.909999084472656,40,"NOC","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,43,36,0),53.409999084472656,40,"NRG","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,47,37,0),14.94000015258789,40,"NUE","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,49,38,0),6.999999809265137,40,"NVDA","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,51,39,0),65.449998474121094,40,"TXN","FOK"));
 
 
         stockDailyRecordRepository.save(new StockDailyRecord("ABT",new Timestamp(117,8,10,18,0,0,0),123.5,123.5));

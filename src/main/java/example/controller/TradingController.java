@@ -49,16 +49,7 @@ public class TradingController {
     @MessageMapping("/addOrder")
     @SendTo("/topic/addOrder")
     public @ResponseBody Map<String, Object> addOrderMessage(SubmitOrder submitOrder){
-
-
         Map<String,Object> map = new HashMap<>();
-//        int isBuy = request.getParameter("isBuy").equals("1")?1:0;
-//        String symbol = request.getParameter("symbol");
-//        double price = Double.parseDouble(request.getParameter("price"));
-//        int quantity = Integer.parseInt(request.getParameter("quantity"));
-//        String strategy = request.getParameter("strategy");
-//        //RawOrder order = new RawOrder(1234566778,0,"ABT",48.5,19);
-
         int isBuy = submitOrder.getIsBuy();
         String symbol = submitOrder.getSymbol();
         double price = submitOrder.getPrice();
@@ -72,7 +63,6 @@ public class TradingController {
         map = orderService.addOrder(order,strategy);
         return map;
     }
-
 
     //here in the place to initial the database.
     @RequestMapping("/initialization")
