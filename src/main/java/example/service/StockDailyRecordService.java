@@ -1,11 +1,17 @@
 package example.service;
 
+import example.entity.Record;
 import example.entity.StockDailyRecord;
+import example.entity.StocksFluctuationRange;
+import example.repository.RecordRepository;
 import example.repository.StockDailyRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,6 +23,8 @@ import java.util.List;
 public class StockDailyRecordService {
     @Autowired
     private StockDailyRecordRepository stockDailyRecordRepository;
+    @Autowired
+    private RecordRepository recordRepository;
 
     public List<StockDailyRecord> getAllStockDailyRecord(){
         return stockDailyRecordRepository.findAll();
@@ -36,6 +44,33 @@ public class StockDailyRecordService {
 
     public List<StockDailyRecord> getStockDailyRecordByTimes(Timestamp timestamp){
         return stockDailyRecordRepository.findByTimes(timestamp);
+    }
+
+    public List<StocksFluctuationRange> getStocksFluctuationRange(){
+        List<StocksFluctuationRange> rangeList = new ArrayList<>();
+        List<StockDailyRecord> list = getAllStockDailyRecord();
+        for(StockDailyRecord stockDailyRecord:list){
+            String Symbol = stockDailyRecord.getSymbol();
+            List<Record> listRecord = recordRepository.findBySymbol(Symbol);
+            //StocksFluctuationRange range = new StocksFluctuationRange();
+            Record latestRecord  = new Record();
+            latestRecord.setTimes(new Timestamp(1));
+            for(int i = 0;i<listRecord.size();i++){
+                if(listRecord.get(i).getTimes().getTime()>latestRecord.getTimes().getTime())
+                    latestRecord = listRecord.get(i);
+            }
+            double range = (latestRecord.getPrice()-stockDailyRecord.getClosePrice())/stockDailyRecord.getClosePrice();
+            if(latestRecord.getSymbol()!=null){
+                DecimalFormat decimalFormat = new DecimalFormat("######0.0000");
+                range = Double.parseDouble(decimalFormat.format(range).toString());
+                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range*100,
+                        Double.parseDouble(decimalFormat.format(latestRecord.getPrice()).toString()), latestRecord.getQuantity()));
+
+            }
+        }
+        Collections.sort(rangeList);
+        return rangeList;
+
     }
 
 }

@@ -61,29 +61,7 @@ public class StockController {
 
     @RequestMapping("/getFluctuationRange")
     public @ResponseBody List<StocksFluctuationRange> getFluctuationRange(){
-        List<StocksFluctuationRange> rangeList = new ArrayList<>();
-        List<StockDailyRecord> list = getAllStockDailyRecord();
-        for(StockDailyRecord stockDailyRecord:list){
-            String Symbol = stockDailyRecord.getSymbol();
-            List<Record> listRecord = recordService.getRecordByName(Symbol);
-            //StocksFluctuationRange range = new StocksFluctuationRange();
-            Record latestRecord  = new Record();
-            latestRecord.setTimes(new Timestamp(1));
-            for(int i = 0;i<listRecord.size();i++){
-                if(listRecord.get(i).getTimes().getTime()>latestRecord.getTimes().getTime())
-                    latestRecord = listRecord.get(i);
-            }
-            double range = (latestRecord.getPrice()-stockDailyRecord.getClosePrice())/stockDailyRecord.getClosePrice();
-            if(latestRecord.getSymbol()!=null){
-                DecimalFormat decimalFormat = new DecimalFormat("######0.0000");
-                range = Double.parseDouble(decimalFormat.format(range).toString());
-                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range*100,
-                        Double.parseDouble(decimalFormat.format(latestRecord.getPrice()).toString()), latestRecord.getQuantity()));
-
-            }
-        }
-        Collections.sort(rangeList);
-        return rangeList;
+        return stockDailyRecordService.getStocksFluctuationRange();
     }
 
 

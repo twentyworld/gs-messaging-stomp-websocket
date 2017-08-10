@@ -61,6 +61,7 @@ public class TradingController {
         Collections.sort(orders);
         map.put("orderBook",orders);
         map.put("record",records);
+        map.put("stockRange",stockDailyRecordService.getStocksFluctuationRange());
 
         sendUserMessage(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size(),id);
 
