@@ -56,6 +56,9 @@ public class TradingController {
         List<RawOrder> orders =orderService.getOrderBookBySymbol(symbol);
         List<Record> records = recordService.getRecordByName(symbol);
 
+        List<RawOrder> ordersByIsBuyOp = new ArrayList<>();
+
+
         Collections.sort(orders);
         Collections.sort(records);
         map.put("orderBook",orders);

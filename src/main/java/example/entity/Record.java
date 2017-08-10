@@ -105,6 +105,6 @@ public class Record  implements Comparable<Record>{
 
     @Override
     public int compareTo(Record o) {
-        return Long.compare(this.getTimes().getTime(), o.getTimes().getTime());
+        return Long.compare( o.getTimes().getTime(),this.getTimes().getTime());
     }
 }
