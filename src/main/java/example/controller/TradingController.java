@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class TradingController {
@@ -39,7 +36,7 @@ public class TradingController {
 
     @MessageMapping("/addOrder")
     @SendTo("/topic/addOrder")
-    public @ResponseBody List<RawOrder> addOrderMessage(SubmitOrder submitOrder){
+    public @ResponseBody Map<String,Object> addOrderMessage(SubmitOrder submitOrder){
         Map<String,Object> map = new HashMap<>();
         long id = submitOrder.getId();
         int isBuy = submitOrder.getIsBuy();
@@ -61,6 +58,10 @@ public class TradingController {
         List<RawOrder> orders =orderService.getOrderBookBySymbol(symbol);
         List<Record> records = recordService.getRecordByName(symbol);
 
+        Collections.sort(orders);
+        map.put("orderBook",orders);
+        map.put("record",records);
+
         sendUserMessage(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size(),id);
 
 
@@ -70,7 +71,7 @@ public class TradingController {
 //            simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder("false"));
 
 
-        return orders;
+        return map;
 
     }
     public void sendUserMessage(boolean flag,long id){
@@ -99,7 +100,9 @@ public class TradingController {
     @RequestMapping(value = "/getOrderBookBySymbol")
     public @ResponseBody List<RawOrder> getOrderBookBySymbol(HttpServletRequest request){
         String symbol = request.getParameter("symbol");
-        return orderService.getOrderBookBySymbol(symbol);
+        List<RawOrder> lists = orderService.getOrderBookBySymbol(symbol);
+        Collections.sort(lists);
+        return lists;
     }
 
 

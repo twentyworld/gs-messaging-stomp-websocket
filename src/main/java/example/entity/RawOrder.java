@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * at last, The forza horizon is really fun, buy is made, looking forward to driving together in the hurricane.
  */
 @Entity
-public class RawOrder {
+public class RawOrder implements Comparable<RawOrder>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long tradeId;
@@ -78,5 +78,10 @@ public class RawOrder {
 
     public void setTraderId(long traderId) {
         this.traderId = traderId;
+    }
+
+    @Override
+    public int compareTo(RawOrder o) {
+        return new Double(o.price).compareTo(new Double(this.price));
     }
 }
