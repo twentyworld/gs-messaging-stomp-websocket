@@ -21,4 +21,9 @@ public class HTMLController {
 
         return "trade";
     }
+
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
+    }
 }

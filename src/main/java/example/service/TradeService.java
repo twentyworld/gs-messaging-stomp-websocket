@@ -114,11 +114,11 @@ public class TradeService {
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,29,31,0),25.610000228881836,40,"ICE","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,32,32,0),55.90000076293945,40,"IBM","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,34,33,0),59.95,40,"ABT","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,37,34,0),46.799998474121094,40,"IP","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,41,35,0),27.909999084472656,40,"NOC","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,37,34,0),56.799998474121094,40,"IP","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,41,35,0),47.909999084472656,40,"NOC","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,43,36,0),29.409999084472656,40,"NRG","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,47,37,0),14.94000015258789,40,"NUE","FOK"));
-        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,49,38,0),6.999999809265137,40,"NVDA","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,47,37,0),54.94000015258789,40,"NUE","FOK"));
+        recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,49,38,0),16.999999809265137,40,"NVDA","FOK"));
         recordRepository.save(new Record(234567,345678,new Timestamp(117,8,7,10,51,39,0),65.449998474121094,40,"TXN","FOK"));
 
 
