@@ -46,13 +46,10 @@ public class TradingController {
         String strategy = submitOrder.getStrategy();
         System.out.println(isBuy+", "+symbol+", "+price+", "+quantity+", "+strategy);
         RawOrder order = new RawOrder(id,isBuy,symbol,price,quantity);
-        //String strategy = "FOK";
-        //orderService = IOrderServiceFactory.getOrderService(strategy);
         System.out.println("zheli1 ");
         //查询点之前。
         List<Record> recordsBefore = recordService.getRecordByName(symbol);
         List<RawOrder> orderBookBefore = orderService.getOrderBookBySymbol(symbol);
-
         //添加order之后，
         List<Record> recordOfAdd = orderService.addOrder(order,strategy);
         List<RawOrder> orders =orderService.getOrderBookBySymbol(symbol);
@@ -62,18 +59,12 @@ public class TradingController {
         map.put("orderBook",orders);
         map.put("record",records);
         map.put("stockRange",stockDailyRecordService.getStocksFluctuationRange());
-
         sendUserMessage(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size(),id);
-
-
 //        if(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size())
 //            simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder("true"));
 //        else
 //            simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder("false"));
-
-
         return map;
-
     }
     public void sendUserMessage(boolean flag,long id){
         simpMessagingTemplate.convertAndSendToUser(id+"","/message",new RejectOrder(flag+""));
