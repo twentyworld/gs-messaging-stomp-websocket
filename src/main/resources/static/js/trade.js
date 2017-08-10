@@ -101,7 +101,7 @@ function sendOrder(ops) {
         //alert(symbol);
         var price = $('#order_bid_price').val();
         //alert(price);
-        var amount = $('#order_bid_origin_volume').();
+        var amount = $('#order_bid_origin_volume').val();
         //alert(amount);
         var strategy = $('#bid_strategy option:selected').val();
         //alert(strategy);
@@ -122,7 +122,7 @@ function sendOrder(ops) {
         //alert(symbol);
         var price = $('#order_ask_price').val();
         //alert(price);
-        var amount = $('#order_ask_origin_volume').();
+        var amount = $('#order_ask_origin_volume').val();
         //alert(amount);
         var strategy = $('#ask_strategy option:selected').val();
         //alert(strategy);
@@ -137,10 +137,10 @@ function sendOrder(ops) {
     }
 
 }
-function setConnected(connected) {
-    $("#order_book").prop("disabled", connected);
-
-}
+// function setConnected(connected) {
+//     $("#order_book").prop("disabled", connected);
+//
+// }
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
