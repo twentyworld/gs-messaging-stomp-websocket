@@ -146,6 +146,7 @@ public class TradeService {
 
 
 
+
         //File file1 = new File("classpath:/inputIntoDatabase/道琼斯历史行情 - Investing.com.csv");
         File file1 = ResourceUtils.getFile("classpath:inputIntoDatabase/上证指数历史行情 - Investing.com.csv");
         try {

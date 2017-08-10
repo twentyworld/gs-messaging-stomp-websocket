@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,9 +72,16 @@ public class StockController {
                     latestRecord = listRecord.get(i);
             }
             double range = (latestRecord.getPrice()-stockDailyRecord.getClosePrice())/stockDailyRecord.getClosePrice();
-            if(latestRecord.getSymbol()!=null)
-                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range,latestRecord.getPrice(),latestRecord.getQuantity()));
+            if(latestRecord.getSymbol()!=null){
+                DecimalFormat decimalFormat = new DecimalFormat("######0.0000");
+                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),Double.parseDouble(decimalFormat.format(range).toString()),latestRecord.getPrice(),latestRecord.getQuantity()));
+
+            }
         }
         return rangeList;
     }
+
+
+
+
 }
