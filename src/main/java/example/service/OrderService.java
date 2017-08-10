@@ -2,6 +2,7 @@ package example.service;
 
 import example.entity.RawOrder;
 import example.repository.OrderBookRepository;
+import example.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class OrderService {
 
     @Autowired
     private OrderBookRepository orderBookRepository;
+    @Autowired
+    private  RecordRepository recordRepository;
 
     public List<RawOrder> getAll(){
         return orderBookRepository.findAll();
@@ -55,13 +58,13 @@ public class OrderService {
         //选择策略的种类
         OrderType ordertype = new OrderType();
         if (type.equals("FOK")) {
-            ordertype.useFOK(orders,order,map,orderBookRepository);
+            ordertype.useFOK(orders,order,map,orderBookRepository,recordRepository);
         } else if (type.equals("GTC")) {
-            ordertype.useGTC(orders,order,map,orderBookRepository);
+            ordertype.useGTC(orders,order,map,orderBookRepository,recordRepository);
         } else if (type.equals("IOC")) {
-            ordertype.useIOC(orders,order,map,orderBookRepository);
+            ordertype.useIOC(orders,order,map,orderBookRepository,recordRepository);
         } else if (type.equals("MarketOrders")) {
-            ordertype.useMarketOrders(orders,order,map,orderBookRepository);
+            ordertype.useMarketOrders(orders,order,map,orderBookRepository,recordRepository);
         }
 
         /************change end***********************/

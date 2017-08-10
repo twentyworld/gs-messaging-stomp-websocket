@@ -1,67 +1,101 @@
 package example.service;
 
 import example.entity.RawOrder;
+import example.entity.Record;
 import example.repository.OrderBookRepository;
+import example.repository.RecordRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.sql.Timestamp;
 
 public class OrderType {
 
+    private Record createRecord (RawOrder order1,RawOrder order2,String type,int quantity) {
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Record record = new Record();
+        if (order1.getIsBuy() == 1) {
+            record.setTraderBid(order1.getTraderId());
+            record.setTraderOffer(order2.getTraderId());
+        } else if (order1.getIsBuy() == 0) {
+            record.setTraderOffer(order1.getTraderId());
+            record.setTraderBid(order2.getTraderId());
+        }
+        record.setTimes(time);
+        record.setPrice(order1.getPrice());
+        record.setQuantity(quantity);
 
-    public boolean useFOK (List<RawOrder> orders,RawOrder order,Map<String,Object> map,OrderBookRepository orderBookRepository) {
+        record.setSymbol(order1.getSymbol());
+        record.setType(type);
+        return record;
+    }
+
+    public boolean useFOK (List<RawOrder> orders, RawOrder order, Map<String,Object> map, OrderBookRepository orderBookRepository, RecordRepository recordRepository) {
         int index = 0;
         for(RawOrder temp : orders){
-            if(temp.getIsBuy()!=order.getIsBuy() && temp.getPrice()==order.getPrice()) {
+            if(temp.getIsBuy()!=order.getIsBuy() && Math.abs(temp.getPrice()-order.getPrice())<0.01) {
                 if (temp.getQuantity()==order.getQuantity()) {
                     List<RawOrder> delete = new ArrayList<>();
                     delete.add(temp);
+                    Record record = createRecord(temp,order,"FOK",temp.getQuantity());
+                    recordRepository.save(record);
                     orderBookRepository.delete(temp);
                     map.put("delete", delete);
+                    map.put("reject", 0);
                     return true;
                 } else if (temp.getQuantity()> order.getQuantity()) {
+                    Record record = createRecord(temp,order,"FOK",order.getQuantity());
+                    recordRepository.save(record);
                     temp.setQuantity(temp.getQuantity()-order.getQuantity());
                     orderBookRepository.save(temp);
                     List<RawOrder> update = new ArrayList<>();
                     update.add(temp);
                     map.put("update", update);
+                    map.put("reject", 0);
                     return true;
-                } else if (temp.getQuantity() < order.getQuantity()) map.put("reject", true);
-                else  map.put("reject", true);
+                } else if (temp.getQuantity() < order.getQuantity()) map.put("reject", 0);
+                else  map.put("reject", 0);
                 break;
             } else if (temp.getIsBuy()!=order.getIsBuy()&& index == (orders.size()-1)) {
-                map.put("reject", true);
+                map.put("reject", 0);
             }
             index++;
         }
-        map.put("reject", true);
+        map.put("reject", 0);
         return false;
     }
 
 
-    public boolean useGTC (List<RawOrder> orders,RawOrder order,Map<String,Object> map,OrderBookRepository orderBookRepository) {
+    public boolean useGTC (List<RawOrder> orders,RawOrder order,Map<String,Object> map,OrderBookRepository orderBookRepository,RecordRepository recordRepository) {
         int index = 0;
         for(RawOrder temp : orders){
-            if(temp.getIsBuy()!=order.getIsBuy() && temp.getPrice()==order.getPrice()) {
+            if(temp.getIsBuy()!=order.getIsBuy() && Math.abs(temp.getPrice()-order.getPrice())<0.01) {
                 if (temp.getQuantity()==order.getQuantity()) {
                     List<RawOrder> delete = new ArrayList<>();
                     delete.add(temp);
+                    Record record = createRecord(temp,order,"GTC",order.getQuantity());
+                    recordRepository.save(record);
                     orderBookRepository.delete(temp);
                     map.put("delete", delete);
+                    map.put("reject", 0);
                     return true;
                 } else if (temp.getQuantity()> order.getQuantity()) {
+                    Record record = createRecord(temp,order,"GTC",order.getQuantity());
+                    recordRepository.save(record);
                     temp.setQuantity(temp.getQuantity() - order.getQuantity());
                     orderBookRepository.save(temp);
                     List<RawOrder> update = new ArrayList<>();
                     update.add(temp);
                     map.put("update", update);
+                    map.put("reject", 0);
                     return true;
                 } else {
                     orderBookRepository.save(order);
                     List<RawOrder> add = new ArrayList<>();
                     add.add(temp);
                     map.put("add", add);
+                    map.put("reject", 0);
                 }
                 break;
             }
@@ -71,10 +105,11 @@ public class OrderType {
         List<RawOrder> add = new ArrayList<>();
         add.add(order);
         map.put("add", add);
+        map.put("reject", 0);
         return false;
     }
 
-    public boolean useIOC (List<RawOrder> orders,RawOrder order,Map<String,Object> map,OrderBookRepository orderBookRepository) {
+    public boolean useIOC (List<RawOrder> orders,RawOrder order,Map<String,Object> map,OrderBookRepository orderBookRepository,RecordRepository recordRepository) {
         //判断交易是否成交
         int count = 0;
         for(RawOrder temp : orders) {
@@ -83,7 +118,7 @@ public class OrderType {
             }
         }
         if (count == 0) {
-            map.put("reject", true);
+            map.put("reject", 0);
             return false;
         }
 
@@ -96,21 +131,31 @@ public class OrderType {
                 List<RawOrder> delete = new ArrayList<>();
                 if (temp.getQuantity() == (order.getQuantity() - count)) {
                     delete.add(temp);
+                    Record record = createRecord(temp,order,"IOC",order.getQuantity());
+                    recordRepository.save(record);
                     orderBookRepository.delete(temp);
                     map.put("delete", delete);
+                    map.put("reject", 0);
                     break;
 
                 } else if (temp.getQuantity() < (order.getQuantity() - count)) {
                     count += temp.getQuantity();
                     delete.add(temp);
+                    Record record = createRecord(temp,order,"IOC",temp.getQuantity());
+                    recordRepository.save(record);
                     orderBookRepository.delete(temp);
                     map.put("delete", delete);
+                    map.put("reject", 0);
                 } else if (temp.getQuantity() > (order.getQuantity() - count)) {
-                    temp.setQuantity( temp.getQuantity() - (order.getQuantity() - count));
+                    int quantity = order.getQuantity() - count;
+                    Record record = createRecord(temp,order,"IOC",quantity);
+                    recordRepository.save(record);
+                    temp.setQuantity( temp.getQuantity() - quantity);
                     orderBookRepository.save(temp);
                     List<RawOrder> update = new ArrayList<>();
                     update.add(temp);
                     map.put("update", update);
+                    map.put("reject", 0);
                     break;
                 }
             }
@@ -120,18 +165,19 @@ public class OrderType {
 
         //存储trader剩余的未交易数据
         if (count < order.getQuantity() && index >= orders.size()) {
-           RawOrder rest = order;
-           rest.setQuantity(order.getQuantity() - count);
-          //  orderBookRepository.save(rest);
-            List<RawOrder> reject = new ArrayList<>();
-            reject.add(rest);
-            map.put("reject", reject);
+            //RawOrder rest = order;
+            //rest.setQuantity(order.getQuantity() - count);
+            int rest = order.getQuantity() - count;
+            //  orderBookRepository.save(rest);
+            // List<RawOrder> reject = new ArrayList<>();
+            // reject.add(rest);
+            map.put("reject", rest);
         }
 
         return true;
     }
 
-    public boolean useMarketOrders (List<RawOrder> orders,RawOrder order,Map<String,Object> map,OrderBookRepository orderBookRepository) {
+    public boolean useMarketOrders (List<RawOrder> orders,RawOrder order,Map<String,Object> map,OrderBookRepository orderBookRepository,RecordRepository recordRepository) {
         //判断交易是否成交
         int count = 0;
         for(RawOrder temp : orders) {
@@ -140,7 +186,7 @@ public class OrderType {
             }
         }
         if (count < order.getQuantity()) {
-            map.put("reject", true);
+            map.put("reject", 0);
             return false;
         }
 
@@ -153,20 +199,30 @@ public class OrderType {
                 List<RawOrder> delete = new ArrayList<>();
                 if (temp.getQuantity() == (order.getQuantity() - count)) {
                     delete.add(temp);
+                    Record record = createRecord(temp,order,"MarketOrders",temp.getQuantity());
+                    recordRepository.save(record);
                     orderBookRepository.delete(temp);
                     map.put("delete", delete);
+                    map.put("reject", 0);
                     break;
                 } else if (temp.getQuantity() < (order.getQuantity() - count)) {
                     count += temp.getQuantity();
                     delete.add(temp);
+                    Record record = createRecord(temp,order,"MarketOrders",temp.getQuantity());
+                    recordRepository.save(record);
                     orderBookRepository.delete(temp);
                     map.put("delete", delete);
+                    map.put("reject", 0);
                 } else if (temp.getQuantity() > (order.getQuantity() - count)) {
-                    temp.setQuantity( temp.getQuantity() - (order.getQuantity() - count));
+                    int quantity = order.getQuantity() - count;
+                    Record record = createRecord(temp,order,"MarketOrders",temp.getQuantity());
+                    recordRepository.save(record);
+                    temp.setQuantity( temp.getQuantity() - quantity);
                     orderBookRepository.save(temp);
                     List<RawOrder> update = new ArrayList<>();
                     update.add(temp);
                     map.put("update", update);
+                    map.put("reject", 0);
                     break;
                 }
             }
