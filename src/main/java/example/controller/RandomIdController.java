@@ -1,5 +1,6 @@
 package example.controller;
 
+import example.entity.UserId;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +18,7 @@ import java.util.Random;
 public class RandomIdController {
 
     @RequestMapping("/getRandomId")
-    public @ResponseBody long getRandomId(){
-        return new Random().nextLong();
+    public @ResponseBody UserId getRandomId(){
+        return new UserId( new Random().nextLong());
     }
 }

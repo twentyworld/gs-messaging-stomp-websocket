@@ -71,7 +71,8 @@ public class StockController {
                     latestRecord = listRecord.get(i);
             }
             double range = (latestRecord.getPrice()-stockDailyRecord.getClosePrice())/stockDailyRecord.getClosePrice();
-            rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range,latestRecord.getPrice(),latestRecord.getQuantity()));
+            if(latestRecord.getSymbol()!=null)
+                rangeList.add(new StocksFluctuationRange(latestRecord.getSymbol(),range,latestRecord.getPrice(),latestRecord.getQuantity()));
         }
         return rangeList;
     }
