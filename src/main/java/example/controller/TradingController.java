@@ -35,8 +35,9 @@ public class TradingController {
     SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/addOrder")
-    @SendTo("/topic/addOrder")
-    public @ResponseBody Map<String,Object> addOrderMessage(SubmitOrder submitOrder){
+    @SendTo({"/topic/addOrder"})
+    @ResponseBody
+    public Map<String,Object> addOrderMessage(SubmitOrder submitOrder){
         Map<String,Object> map = new HashMap<>();
         long id = submitOrder.getId();
         int isBuy = submitOrder.getIsBuy();
