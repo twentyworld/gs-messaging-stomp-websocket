@@ -5,21 +5,25 @@ window.onload=function(){
     editHeight();
     getDatabySymbol();
     connect();
+    showTraderId();
 }
 window.onresize = function(){
     editHeight();
 }
-var socket = new SockJS('/gs-guide-websocket');
-stompClient = Stomp.over(socket);
-stompClient.connect({}, function (frame) {
-    setConnected(true);
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', function (greeting) {
-        //showGreeting(JSON.parse(greeting).content);
-        // greeting = JSON.parse(greeting.body)
-        // showGreeting(greeting.record[0].time);
-    });
-});
+
+
+function showTraderId() {
+    $.ajax({
+        url:'http://localhost:9001/getRandomId',
+        tyep:'get',
+        dataType:'json',
+        success:function(traderId){
+            console.log(traderId.id);
+            $('#traderId').text(traderId.id);
+
+        }
+    })
+}
 
 function editHeight(){
     var clientHeight = document.body.clientHeight;
@@ -30,21 +34,6 @@ function editHeight(){
     order_book.style.height = clientHeight-market_trades.clientHeight + "px";
 }
 
-// function orderSubmit(ops){
-//     if(ops==1) {
-//         //buy
-//         var params;
-//         var price = document.getElementById("order_bid_price").value;
-//         var quantity = document.getElementById("order_bid_origin_volume").value;
-//         var traderId = document.getElementById("traderId").innerHTML;
-//         params = {"price":price,"quantity":quantity,"traderId":traderId};
-//
-//
-//     }else {
-//         //sell
-//
-//     }
-// }
 
 
 function getDatabySymbol() {
@@ -98,9 +87,59 @@ function getUrlParam(name) {
     var r = window.location.search.substr(1).match(reg); //匹配目标参数
     if (r != null) return unescape(r[2]); return null; //返回参数值
 }
-function sendOrder() {
-    stompClient.send("/app/addOrder", {}, JSON.stringify({
-        'name': $("#name").val()}));
+
+
+
+
+function sendOrder(ops) {
+    if(ops==1){
+        var userId = $('#traderId').html();
+        //alert(userId);
+        var isBuy = $('#bid_ops').val();
+        //alert(isBuy);
+        var symbol = getUrlParam('symbol');
+        //alert(symbol);
+        var price = $('#order_bid_price').val();
+        //alert(price);
+        var amount = $('#order_bid_origin_volume').();
+        //alert(amount);
+        var strategy = $('#bid_strategy option:selected').val();
+        //alert(strategy);
+        stompClient.send("/app/addOrder", {}, JSON.stringify({
+            'id':userId,
+            'isBuy':isBuy,
+            'price':price,
+            'quantity':amount,
+            'symbol':symbol,
+            'strategy':strategy
+        }));
+    }else{
+        var userId = $('#traderId').html();
+        //alert(userId);
+        var isBuy = $('#ask_ops').val();
+        //alert(isBuy);
+        var symbol = getUrlParam('symbol');
+        //alert(symbol);
+        var price = $('#order_ask_price').val();
+        //alert(price);
+        var amount = $('#order_ask_origin_volume').();
+        //alert(amount);
+        var strategy = $('#ask_strategy option:selected').val();
+        //alert(strategy);
+        stompClient.send("/app/addOrder", {}, JSON.stringify({
+            'id':userId,
+            'isBuy':isBuy,
+            'price':price,
+            'quantity':amount,
+            'symbol':symbol,
+            'strategy':strategy
+        }));
+    }
+
+}
+function setConnected(connected) {
+    $("#order_book").prop("disabled", connected);
+
 }
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');

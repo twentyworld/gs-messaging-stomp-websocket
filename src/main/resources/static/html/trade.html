@@ -16,6 +16,8 @@
     <link href="../css/trade.css" media="all" rel="stylesheet"/>
     <script src="../js/jquery.min.js"></script>
     <script src="../js/trade.js"></script>
+    <script src="../js/sockjs.min.js"></script>
+    <script src="../js/stomp.min.js"></script>
 </head>
 <body data-lang="zh-cn" id="markets-show">
 <header class="navbar navbar-default navbar-static-top" role="navigation">
@@ -35,7 +37,7 @@
                 </span>
             </p>
         </ul>
-        <ul class="nav navbar-nav navbar-right"><p id="traderId" class="navbar-text">123456789</p></ul>
+        <ul class="nav navbar-nav navbar-right"><p id="traderId" class="navbar-text"></p></ul>
     </div>
 </header>
 <div id="wrap">
@@ -175,10 +177,10 @@
         </div>
         <div class="panel panel-default entry-left" id="ask_entry">
             <div class="panel-body">
-                <form accept-charset="UTF-8" action="/app/addOrder" class="new_order_ask"
+                <form accept-charset="UTF-8" action="" class="new_order_ask"
                       data-remote="true" id="new_order_ask" method="post">
                     <div style="margin:0;padding:0;display:inline">
-                        <input name="isBuy" type="hidden" value="0"/>
+                        <input name="isBuy" type="hidden" value="0" id="ask_ops"/>
                         <input id="symbolFlag1" name="symbol" type="hidden"/>
                     </div>
                     <div class="input-group strategy">
@@ -207,21 +209,21 @@
                                 <!--class="label label-danger status-danger"></span><span-->
                                 <!--class="current-balance number"></span><span class="unit">BCC</span></div>-->
                     <!--</div>-->
-                    <button class="btn btn-danger btn-block text-down" type="submit">Sell BCC</button>
+                    <button class="btn btn-danger btn-block text-down" type="button" onclick="sendOrder(0)">Sell BCC</button>
                 </form>
             </div>
         </div>
         <div class="panel panel-default entry-right" id="bid_entry">
             <div class="panel-body">
-                <form accept-charset="UTF-8" action="/app/addOrder" class="new_order_bid"
+                <form accept-charset="UTF-8" action="" class="new_order_bid"
                       data-remote="true" id="new_order_bid" method="post">
                     <div style="margin:0;padding:0;display:inline">
-                        <input name="isBuy" type="hidden" value="1"/>
+                        <input name="isBuy" type="hidden" value="1" id="bid_ops"/>
                         <input id="symbolFlag2" name="symbol" type="hidden"/>
                     </div>
 
                     <div class="input-group strategy">
-                        <select class="form-control" name="strategy">
+                        <select class="form-control" name="strategy" id="bid_strategy">
                             <option>Please Choose Strategy </option>
                             <option>FOK</option>
                             <option>GTC</option>
@@ -244,7 +246,7 @@
                                 <!--class="label label-danger status-danger"></span><span-->
                                 <!--class="current-balance number"></span><span class="unit">CNY</span></div>-->
                     <!--</div>-->
-                    <button class="btn btn-danger btn-block text-up" type="submit">Buy BCC</button>
+                    <button class="btn btn-danger btn-block text-up" type="button" onclick="sendOrder(1)">Buy BCC</button>
                 </form>
             </div>
         </div>
