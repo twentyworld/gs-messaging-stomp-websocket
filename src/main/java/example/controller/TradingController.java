@@ -1,10 +1,7 @@
 package example.controller;
 
 
-import example.entity.Content;
-import example.entity.Message;
-import example.entity.RawOrder;
-import example.entity.StocksFluctuationRange;
+import example.entity.*;
 import example.service.OrderService;
 import example.service.RecordService;
 import example.service.TradeService;
@@ -51,16 +48,22 @@ public class TradingController {
 
     @MessageMapping("/addOrder")
     @SendTo("/topic/addOrder")
-    public @ResponseBody Map<String, Object> addOrderMessage(HttpServletRequest request){
+    public @ResponseBody Map<String, Object> addOrderMessage(SubmitOrder submitOrder){
+
 
         Map<String,Object> map = new HashMap<>();
-        int isBuy = request.getParameter("isBuy").equals("1")?1:0;
-        String symbol = request.getParameter("symbol");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        String strategy = request.getParameter("strategy");
-        //RawOrder order = new RawOrder(1234566778,0,"ABT",48.5,19);
+//        int isBuy = request.getParameter("isBuy").equals("1")?1:0;
+//        String symbol = request.getParameter("symbol");
+//        double price = Double.parseDouble(request.getParameter("price"));
+//        int quantity = Integer.parseInt(request.getParameter("quantity"));
+//        String strategy = request.getParameter("strategy");
+//        //RawOrder order = new RawOrder(1234566778,0,"ABT",48.5,19);
 
+        int isBuy = submitOrder.getIsBuy();
+        String symbol = submitOrder.getSymbol();
+        double price = submitOrder.getPrice();
+        int quantity = submitOrder.getQuantity();
+        String strategy = submitOrder.getStrategy();
         System.out.println(isBuy+", "+symbol+", "+price+", "+quantity+", "+strategy);
         RawOrder order = new RawOrder(1234567,isBuy,symbol,price,quantity);
         //String strategy = "FOK";
