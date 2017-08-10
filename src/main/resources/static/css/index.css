@@ -1,0 +1,218 @@
+#container{
+    background-color: rgb(19,16,20);
+    width: 1240px;
+    margin: auto;
+}
+#header{
+    width: 1240px;
+    height: 60px;
+    background-color: rgb(44,44,50);
+    margin: auto;
+    padding-top: 4px;
+}
+#header .logo{
+    width: 402px;
+    height: 55px;
+    background: url("../img/logo.png");
+    background-size: 100%;
+    margin-left: 20px;
+}
+#header .trader_id{
+    float: right;
+    color: gray;
+    font-size: 20px;
+    margin-top: -33px;
+    margin-right: 36px;
+    font-family: DFKai-SB;
+
+}
+#header .search{
+    float: right;
+    margin-right: 210px;
+    margin-top: -40px;
+}
+#header .search input{
+    height: 33px;
+    width: 210px;
+    background-color: #1f1f24;
+    border-radius: 7px;
+    padding-left: 3px;
+    font-size: 16px;
+}
+.above{
+    width: 100%;
+    height: 490px;
+}
+.change{
+    width: 35.5%;
+    height: 490px;
+    float: left;
+    margin-left: 5px;
+}
+.stock{
+    width: 100%;
+    height: 245px;
+    margin-top: 5px;
+}
+.stock .stock_name{
+    width: 100%;
+    height: 42px;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(39,39,44);
+}
+.stock .stock_name .up_more{
+    float: right;
+    margin-right: 10px;
+    margin-top: 12px;
+}
+.stock .stock_name .rising_list{
+    float: left;
+    margin-left: 8px;
+    margin-top: 12px;
+}
+.stock .stock_container{
+    width: 100%;
+    color: lightgrey;
+}
+.stock .stock_container a{
+    color: lightgrey;
+}
+.stock .stock_container .rise{
+    color: #FD1050;
+}
+.stock .stock_container .drop{
+    color: #0CF49B;
+}
+.stock .stock_container .stock_bar{
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    border-bottom: 1px solid #252526;
+}
+.stock .stock_container .stock_bar2{
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+    border-bottom: 1px solid #252526;
+}
+.stock .stock_container .stock_code{
+    width: 42%;
+    padding-left: 10px;
+    border-right: 1px solid #252526;
+}
+.stock .stock_container .stock_price{
+    width: 23%;
+    padding-left: 5px;
+    border-right: 1px solid #252526;
+}
+.stock .stock_container .stock_change{
+    width: 23%;
+    padding-left: 5px;
+    border-right: 1px solid #252526;
+}
+.stock .stock_container .stock_volume{
+    padding-left: 5px;
+}
+
+#candlestick{
+    height: 500px;
+    width: 64.2%;
+    float: left;
+    margin-top: -3px;
+    margin-left: -3px;
+}
+#down{
+    width: 100%;
+    height: 258px;
+    margin-top: 12px;
+}
+
+#down a{
+    color: lightgrey;
+}
+#down .recommend{
+    width: 43%;
+    height: 258px;
+    float: left;
+    margin-left: 5px;
+}
+#down .recommend .recom_title{
+    width: 100%;
+    height: 35px;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(39,39,44);
+    padding-left: 8px;
+    padding-top: 14px;
+}
+#down .recommend .recom_con{
+    width: 100%;
+    color: lightgrey;
+}
+#down .recommend .recom_con table{
+    width:100% ;
+}
+#down .recommend .recom_con thead tr{
+    width: 100%;
+    height: 33px;
+    font-size: 16px;
+    border-bottom: 1px solid #252526;
+}
+#down .recommend .recom_con tbody tr{
+    width: 100%;
+    height: 35px;
+    font-size: 14px;
+    border-bottom: 1px solid #252526;
+}
+#down .recommend .recom_con table .recom_code,.recom_price,.recom_change,.recom_volume{
+    border-right: 1px solid #252526;
+}
+#down .recommend .recom_con table .recom_code{
+    padding-left: 10px;
+}
+#down .recommend .recom_con table .recom_price,.recom_change,.recom_volume,.recom_ope{
+    padding-left: 5px;
+}
+
+#down .news{
+    width: 54.8%;
+    height: 258px;
+    float: left;
+    margin-left: 10px;
+}
+
+#down .news .news_title{
+    width: 100%;
+    height: 35px;
+    font-size: 18px;
+    color: white;
+    padding-left: 8px;
+    padding-top: 14px;
+    background-color: rgb(39,39,44);
+}
+#down .news .news_title span{
+    float: right;
+}
+#down .news .news_txt{
+    width: 100%;
+    font-size: 14px;
+    color: lightgrey;
+}
+#down .news .news_txt ul li{
+    width: 100%;
+    height: 29px;
+    padding-top: 12px;
+    padding-left: 8px;
+    padding-right: 5px;
+    border-bottom: 1px solid #252526;
+}
+#down .news .news_txt ul .news_last{
+    border: none;
+}
+#down .news .news_txt ul li a{
+    float: left;
+}
+#down .news .news_txt ul li span{
+    float: right;
+}
