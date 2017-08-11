@@ -11,7 +11,9 @@ body {
 article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
     display: block
 }
-
+.rowRed{
+    background-color: #85292d;
+}
 audio, canvas, progress, video {
     display: inline-block;
     vertical-align: baseline
@@ -174,7 +176,7 @@ optgroup {
 }
 
 table {
-    border-collapse: collapse;
+
     border-spacing: 0
 }
 

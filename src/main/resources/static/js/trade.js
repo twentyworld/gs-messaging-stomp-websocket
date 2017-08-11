@@ -222,10 +222,12 @@ function connect() {
             console.log(data);
             var jsons = JSON.parse(data.body);
             var record = jsons.record;
-            var orderBook = jsons.orderBook
+            var orderBookBid = jsons.orderBookBid;
+            var orderBookAsk = jsons.orderBookAsk;
             $('#bidOrder').html('');
+            renewOrderBook(orderBookBid);
             $('#askOrder').html('');
-            renewOrderBook(orderBook);
+            renewOrderBook(orderBookAsk);
             $("#tradeHistory").html('');
             renewOrderHistory(record);
         });
@@ -233,8 +235,12 @@ function connect() {
             var jsons = JSON.parse(data.body);
             if(jsons.reject=="true"){
                 alert("Your Order Transaction failed!");
+                var rowRed = "rowRed";
+                $("#myOrders").children().children().has("td").addClass(rowRed);
+
             }else {
-                alert("Your Order Transaction was Successful!")
+                alert("Your Order Transaction was Successful!");
+
             }
         });
     });
@@ -294,7 +300,7 @@ function renewOrderBook(orderBook) {
 function addMyOrder(isBuy, price, amount, total){
     var status = isBuy == 1 ? 'Buy' : 'Sell';
     var oldHtml = $("#myOrders").html();
-    var newHtml = '<tr><td class="time text-left col-xs-7"><div style="display: block">'+status+'</div></td> <td class="my text-left col-xs-2"><div style="display:none;"><i class="fa fa-star"></i></div></td> <td class="price text-right col-xs-7 text-down"><div style="display: block">'+price+'</div></td> <td class="price text-right col-xs-7 text-down"><div style="display: block">'+amount+'</div></td> <td class="volume text-right col-xs-8"><div style="display: block">'+total+'</div></td> </tr>';
+    var newHtml = '<tr><td class="time text-left col-xs-7"><div style="display: block">'+status+'</div></td> <td class="my text-left col-xs-2"><div style="display:none;"><i class="fa fa-star"></i></div></td> <td class="price text-right col-xs-3 text-down"><div style="display: block">'+price+'</div></td> <td class="price text-right col-xs-5 text-down"><div style="display: block">'+amount+'</div></td> <td class="volume text-right col-xs-8"><div style="display: block">'+total+'</div></td> </tr>';
     $("#myOrders").html(oldHtml+newHtml);
 
 }
