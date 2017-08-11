@@ -61,8 +61,11 @@ public class TradingController {
 
         Collections.sort(orders);
         Collections.sort(records);
+
+        List<RawOrder> orderBookAsk = getOrderBy(orders,false);
+        Collections.reverse(orderBookAsk);
         map.put("orderBookBid",getOrderBy(orders,true));
-        map.put("orderBookAsk",getOrderBy(orders,false));
+        map.put("orderBookAsk",orderBookAsk);
         map.put("record",records);
         map.put("stockRange",stockDailyRecordService.getStocksFluctuationRange());
         sendUserMessage(recordsBefore.size()==records.size() &&orderBookBefore.size() == orders.size(),id);
