@@ -235,12 +235,12 @@ function connect() {
             var jsons = JSON.parse(data.body);
             if(jsons.reject=="true"){
                 alert("Your Order Transaction failed!");
-                var rowRed = "rowRed";
-                $("#myOrders").children().children().has("td").addClass(rowRed);
+
 
             }else {
                 alert("Your Order Transaction was Successful!");
-
+                var rowRed = "rowRed";
+                $("#myOrders").children().children().has("td").addClass(rowRed);
             }
         });
     });
