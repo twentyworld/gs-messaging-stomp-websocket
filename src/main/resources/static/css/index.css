@@ -73,8 +73,14 @@
 }
 .stock .stock_container{
     width: 100%;
+    height: 210px;
     color: lightgrey;
+    overflow-y:scroll;
 }
+/*.stock .stock_container table{*/
+    /*height: 442px;*/
+    /*overflow-y:scroll;*/
+/*}*/
 .stock .stock_container a{
     color: lightgrey;
 }

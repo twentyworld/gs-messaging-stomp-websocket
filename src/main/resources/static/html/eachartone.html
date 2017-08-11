@@ -4,24 +4,24 @@
     <title>ECharts</title>
 </head>
 <body>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    
-	<div class="top-right">
-    <div id="container" style="height: 492px;width: auto"></div>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+<div class="top-right">
+    <div id="contain" style="height: 500px;width: auto"></div>
     <script type="text/javascript"
-            src="echarts-all-3.js"></script>
+            src="../echarts/echarts-all-3.js"></script>
     <script type="text/javascript"
-            src="DataTool.js"></script>
+            src="../echarts/DataTool.js"></script>
     <script type="text/javascript"
-            src="China.js"></script>
+            src="../echarts/China.js"></script>
     <script type="text/javascript"
-            src="world.js"></script>
+            src="../echarts/world.js"></script>
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
     <script type="text/javascript"
-            src="bmap.js"></script>
+            src="../echarts/bmap.js"></script>
     <script type="text/javascript">
-        var dom = document.getElementById("container");
+        var dom = document.getElementById("contain");
         var myChart = echarts.init(dom);
         var app = {};
         option = null;
@@ -54,11 +54,11 @@
             return [+item[1], +item[2], +item[5], +item[6]];
         });
         var option = {
-		
+
             backgroundColor: '#1a1a1c',
-			
-			
-			
+
+
+
             legend: {
                 data: ['时K', '日K', '周K', '月K'],
                 inactiveColor: '#777',
@@ -66,8 +66,8 @@
                     color: '#fff'
                 }
             },
-			
-				
+
+
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -79,26 +79,26 @@
                     }
                 }
             },
-			
-			 toolbox: {
-        show : true,
-        feature : {
-            mark : {show: true},
-            dataZoom : {show: true},
-            dataView : {show: true, readOnly: false},
-            magicType: {show: true, type: ['line', 'bar']},
-            restore : {show: true},
-            saveAsImage : {show: true}
-        }
-    },
-	
-	dataZoom : {
-        show : true,
-        realtime: true,
-        start : 50,
-        end : 100
-    },
-	
+
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataZoom : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+
+            dataZoom : {
+                show : true,
+                realtime: true,
+                start : 50,
+                end : 100
+            },
+
             xAxis: {
                 type: 'category',
                 data: dates,
@@ -147,7 +147,7 @@
                             width: 1
                         }
                     }
-                },		
+                },
                 {
                     name: '月K',
                     type: 'line',
