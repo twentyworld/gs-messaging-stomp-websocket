@@ -38,7 +38,7 @@ function showHeader() {
             $(market).each(function (index, obj) {
                 if(symbol==obj.symbol){
                     $('#market_name').html(obj.symbol);
-                    $('#market_change').html(obj.range  + '%');
+                    $('#market_change').html((obj.range).toFixed(2)  + '%');
                     $('#market_volume').html(obj.quantity);
                 }
             });
@@ -54,35 +54,72 @@ function editHeight(){
     candlestick.style.height = clientHeight-market_trades.clientHeight + "px";
     order_book.style.height = clientHeight-market_trades.clientHeight + "px";
 }
-
 function getOrderBook() {
     $.ajax({
-        url:'http://localhost:9001/getOrderBookBySymbol',
+        url:'http://localhost:9001/getOrderBookBySymbolBidAndOffer',
         type:'post',
         data: {"symbol":symbol},
         dataType:'json',
         success:function (data) {
-            console.log(data);
-            $(data).each(function(index,obj){
+            //console.log(data);
+            //var jsons = JSON.parse(data.body);
+            // var biddata = data.orderBookBid;
+            // var askdata = jsons.orderBookAsk;
+            // console.log(biddata);
+            // console.log(askdata);
+            $(data.orderBookBid).each(function(index,obj){
+                console.log(obj);
+                var price = parseFloat(obj.price.toFixed(4));
+                console.log(price);
+                var quantity = parseInt(obj.quantity);
+                console.log(quantity);
+                var value = (price * quantity).toFixed(4);
+                console.log(value);
+                var oldHtml = $('#bidOrder').html();
+                var newHtml = '<tr><td class="amount col-xs-8">'+value+'</td> <td class="volume col-xs-8">'+obj.quantity+'</td> <td class="price col-xs-8 text-up"><div style="display: block;"> <b>'+price+'</b> </div></td> </tr>';
+                $('#bidOrder').html(oldHtml+newHtml);
+            });
+            $(data.orderBookAsk).each(function(index,obj){
                 var price = parseFloat(obj.price.toFixed(4));
                 var quantity = parseInt(obj.quantity);
                 var value = (price * quantity).toFixed(4);
-                if(obj.isBuy == 1){
-                    var oldHtml = $('#bidOrder').html();
-                    var newHtml = '<tr><td class="amount col-xs-8">'+value+'</td> <td class="volume col-xs-8">'+obj.quantity+'</td> <td class="price col-xs-8 text-up"><div style="display: block;"> <b>'+price+'</b> </div></td> </tr>';
-                    $('#bidOrder').html(oldHtml+newHtml);
-                }else{
-                    var price = parseFloat(obj.price.toFixed(4));
-                    var quantity = parseInt(obj.quantity);
-                    var value = (price * quantity).toFixed(4);
-                    var oldHtml = $('#askOrder').html();
-                    var newHtml = '<tr><td class="price col-xs-8 text-left text-down"><div style="display: block;"><b>'+price+'</b> </div></td> <td class="volume col-xs-8 text-left">'+obj.quantity+'</td> <td class="amount col-xs-8 text-left">'+value+'</td> </tr>';
+                var oldHtml = $('#askOrder').html();
+                var newHtml = '<tr><td class="price col-xs-8 text-left text-down"><div style="display: block;"><b>'+price+'</b> </div></td> <td class="volume col-xs-8 text-left">'+obj.quantity+'</td> <td class="amount col-xs-8 text-left">'+value+'</td> </tr>';
                     $('#askOrder').html(oldHtml+newHtml);
-                }
+
             })
         }
     });
 }
+
+// function getOrderBook() {
+//     $.ajax({
+//         url:'http://localhost:9001/getOrderBookBySymbol',
+//         type:'post',
+//         data: {"symbol":symbol},
+//         dataType:'json',
+//         success:function (data) {
+//             console.log(data);
+//             $(data).each(function(index,obj){
+//                 var price = parseFloat(obj.price.toFixed(4));
+//                 var quantity = parseInt(obj.quantity);
+//                 var value = (price * quantity).toFixed(4);
+//                 if(obj.isBuy == 1){
+//                     var oldHtml = $('#bidOrder').html();
+//                     var newHtml = '<tr><td class="amount col-xs-8">'+value+'</td> <td class="volume col-xs-8">'+obj.quantity+'</td> <td class="price col-xs-8 text-up"><div style="display: block;"> <b>'+price+'</b> </div></td> </tr>';
+//                     $('#bidOrder').html(oldHtml+newHtml);
+//                 }else{
+//                     var price = parseFloat(obj.price.toFixed(4));
+//                     var quantity = parseInt(obj.quantity);
+//                     var value = (price * quantity).toFixed(4);
+//                     var oldHtml = $('#askOrder').html();
+//                     var newHtml = '<tr><td class="price col-xs-8 text-left text-down"><div style="display: block;"><b>'+price+'</b> </div></td> <td class="volume col-xs-8 text-left">'+obj.quantity+'</td> <td class="amount col-xs-8 text-left">'+value+'</td> </tr>';
+//                     $('#askOrder').html(oldHtml+newHtml);
+//                 }
+//             })
+//         }
+//     });
+// }
 
 //补0操作
 function getzf(num){
@@ -129,8 +166,9 @@ function getUrlParam(name) {
 
 function forbidInput(value,isBuy) {
     if(isBuy == 1){
-        if (value== "IOC"||value=="marketOrders") {
+        if (value== "IOC"||value=="MarketOrders") {
             $('#order_bid_price').attr("disabled",true);
+            $('#order_bid_origin_volume').attr("disabled",false);
         }else if (value=="FOK"||value=="GTC") {
             $('#order_bid_price').attr("disabled",false);
             $('#order_bid_origin_volume').attr("disabled",false);
@@ -138,9 +176,10 @@ function forbidInput(value,isBuy) {
             $('#order_bid_price').attr("disabled",true);
             $('#order_bid_origin_volume').attr("disabled",true);
         }
-    }else {
-        if(value== "IOC"||value== "marketOrders") {
+    }else if(isBuy == 0){
+        if(value== "IOC"||value== "MarketOrders") {
             $('#order_ask_price').attr("disabled",true);
+            $('#order_ask_origin_volume').attr("disabled",false);
         }else if (value=="FOK"||value=="GTC") {
             $('#order_ask_price').attr("disabled",false);
             $('#order_ask_origin_volume').attr("disabled",false);

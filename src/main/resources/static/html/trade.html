@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav navbar-left" id="menu">
             <a class="navbar-brand" href="/"></a>
-            <a class="navbar-text hover-able" data-hover-target="#market_list" href="#" style="color: #BBB">BACK TO INDEX</a>
+            <a class="navbar-text hover-able" data-hover-target="#market_list" href="index.html" style="color: #BBB">BACK TO INDEX</a>
             <p class="navbar-text hover-able" data-hover-target="#market_list" style="color: #BBB">
                 <span class="market" id="market_name"></span>
             </p>
@@ -125,7 +125,7 @@
                 </table>
             </div>
             <div class="panel-body panel-body-content">
-                <div class="empty-row">You have no open orders.</div>
+
                 <table class="table table-hover" id="myOrders">
                     <tbody></tbody>
                 </table>
@@ -165,7 +165,7 @@
                     </div>
                     <div class="input-group amount">
                         <input autocomplete="off" class="form-control" id="order_ask_origin_volume" name="amount" type="text" onchange="computeTotal(0)"/>
-                        <span class="input-group-addon">Amount [BCC]</span>
+                        <span class="input-group-addon">Amount [QTY]</span>
                     </div>
                     <div class="input-group total"><input autocomplete="off" class="form-control" id="order_ask_total" name="total" type="text"/>
                         <span class="input-group-addon">Total [CNY]</span>
@@ -176,7 +176,7 @@
                                 <!--class="label label-danger status-danger"></span><span-->
                                 <!--class="current-balance number"></span><span class="unit">BCC</span></div>-->
                     <!--</div>-->
-                    <button class="btn btn-danger btn-block text-down" type="button" onclick="sendOrder(0)">Sell BCC</button>
+                    <button class="btn btn-danger btn-block text-down" type="button" onclick="sendOrder(0)">SELL</button>
                 </form>
             </div>
         </div>
@@ -202,7 +202,7 @@
                         <span class="input-group-addon">Price [CNY]</span>
                     </div>
                     <div class="input-group amount"><input autocomplete="off" class="form-control" id="order_bid_origin_volume" name="amount" type="text" onchange="computeTotal(1)"/>
-                        <span class="input-group-addon">Amount [BCC]</span>
+                        <span class="input-group-addon">Amount [QTY]</span>
                     </div>
                     <div class="input-group total"><input autocomplete="off" class="form-control" id="order_bid_total" name="total" type="text"/>
                         <span class="input-group-addon">Total [CNY]</span>
@@ -213,7 +213,7 @@
                                 <!--class="label label-danger status-danger"></span><span-->
                                 <!--class="current-balance number"></span><span class="unit">CNY</span></div>-->
                     <!--</div>-->
-                    <button class="btn btn-danger btn-block text-up" type="button" onclick="sendOrder(1)">Buy BCC</button>
+                    <button class="btn btn-danger btn-block text-up" type="button" onclick="sendOrder(1)">BUY</button>
                 </form>
             </div>
         </div>
