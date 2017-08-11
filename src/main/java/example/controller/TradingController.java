@@ -56,14 +56,16 @@ public class TradingController {
         List<RawOrder> orders =orderService.getOrderBookBySymbol(symbol);
         List<Record> records = recordService.getRecordByName(symbol);
 
-        List<RawOrder> ordersByIsBuyOp = new ArrayList<>();
+        //List<RawOrder> ordersByIsBuyOp = new ArrayList<>();
 
 
         Collections.sort(orders);
         Collections.sort(records);
 
         List<RawOrder> orderBookAsk = getOrderBy(orders,false);
+        System.out.println(orderBookAsk.get(0).getPrice());
         Collections.reverse(orderBookAsk);
+        System.out.println(orderBookAsk.get(0).getPrice());
         map.put("orderBookBid",getOrderBy(orders,true));
         map.put("orderBookAsk",orderBookAsk);
         map.put("record",records);
@@ -127,6 +129,23 @@ public class TradingController {
         Collections.sort(lists);
         return lists;
     }
+
+    @RequestMapping(value = "/getOrderBookBySymbolBidAndOffer")
+    public @ResponseBody Map<String,Object> getOrderBookBySymbolBidAndOffer(HttpServletRequest request){
+        String symbol = request.getParameter("symbol");
+        //List<RawOrder> lists = orderService.getOrderBookBySymbol(symbol);
+
+        Map<String,Object> map = new HashMap<>();
+        List<RawOrder> orders =orderService.getOrderBookBySymbol(symbol);
+        Collections.sort(orders);
+        List<RawOrder> orderBookAsk = getOrderBy(orders,false);
+        System.out.println(orderBookAsk.get(0).getPrice());
+        Collections.reverse(orderBookAsk);
+        map.put("orderBookBid",getOrderBy(orders,true));
+        map.put("orderBookAsk",orderBookAsk);
+        return map;
+    }
+
 
 
     @RequestMapping("/getStockUpsAndDowns")
