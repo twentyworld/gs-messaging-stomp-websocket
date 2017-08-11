@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ public class RecordController {
     @RequestMapping("/getRecordBySymbol")
     public @ResponseBody List<Record> getRecordBySymbol(HttpServletRequest request){
         String symbol = request.getParameter("symbol");
-        return recordService.getRecordByName(symbol);
+        List<Record> list =recordService.getRecordByName(symbol);
+        Collections.sort(list);
+        return list;
     }
 }
